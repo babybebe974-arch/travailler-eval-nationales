@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Accueil — Travailler évaluations nationales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #09090f;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .hero {
+      background: linear-gradient(180deg, rgba(94,207,177,0.08) 0%, transparent 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #5ecfb1;
+      border: 1px solid rgba(94,207,177,0.3);
+      background: rgba(94,207,177,0.07);
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 7vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.75rem;
+    }
+    .hero h1 span {
+      color: #e8c87a;
+    }
+    .hero p {
+      color: rgba(240,237,232,0.55);
+      max-width: 620px;
+      margin: 0 auto 1.8rem;
+      font-size: 1.1rem;
+    }
+    .student-selector {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.4rem 1rem 0.4rem 1.6rem;
+      backdrop-filter: blur(4px);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .student-selector label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      color: #e8c87a;
+    }
+    select {
+      background: #1e1e2a;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 40px;
+      padding: 0.5rem 1.2rem;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.15s;
+    }
+    select:hover {
+      border-color: #5ecfb1;
+    }
+    .save-status {
+      font-size: 0.7rem;
+      color: #7ecf8a;
+      font-family: 'DM Mono', monospace;
+      margin-left: 0.5rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #5ecfb1;
+      padding-left: 1rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .card {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 1.8rem;
+      transition: transform 0.1s ease, border-color 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(94,207,177,0.4);
+      transform: translateY(-2px);
+    }
+    .card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    .card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      color: rgba(240,237,232,0.65);
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+    .btn {
+      display: inline-block;
+      background: rgba(94,207,177,0.1);
+      border: 1px solid rgba(94,207,177,0.4);
+      color: #5ecfb1;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: rgba(94,207,177,0.25);
+      border-color: #5ecfb1;
+    }
+    .info-card {
+      background: #0c0c14;
+      border-left: 3px solid #e8c87a;
+      padding: 1.2rem 1.5rem;
+      border-radius: 16px;
+      margin-top: 1rem;
+    }
+    .footer {
+      background: #0b0b10;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: rgba(240,237,232,0.4);
+    }
+    @media (max-width: 680px) {
+      .container {
+        padding: 1.5rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .student-selector {
+        padding: 0.3rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">⚡ CM2 → 6e • Évaluations nationales</div>
+  <h1>Travailler <span>évaluations nationales</span></h1>
+  <p>Entraînement ciblé sur les compétences les plus difficiles (REP+), suivi en temps réel et progression garantie.</p>
+  
+  <!-- Sélecteur d'élève (utilisé sur toutes les pages, on stocke le prénom) -->
+  <div class="student-selector">
+    <label>👤 Élève :</label>
+    <select id="prenomSelect">
+      <option value="">-- Choisis ton prénom --</option>
+      <option value="Raphael">Raphael</option><option value="Heidi">Heidi</option><option value="Alice">Alice</option>
+      <option value="Norah">Norah</option><option value="Adèle">Adèle</option><option value="Kim">Kim</option>
+      <option value="Sheurley">Sheurley</option><option value="Iris">Iris</option><option value="Luc">Luc</option>
+      <option value="Trecy">Trecy</option><option value="Loris">Loris</option><option value="Léna">Léna</option>
+      <option value="Amandine">Amandine</option><option value="Ethan">Ethan</option><option value="Andryana">Andryana</option>
+      <option value="Kaysia">Kaysia</option><option value="Camila">Camila</option><option value="Cassie">Cassie</option>
+      <option value="Adriel">Adriel</option><option value="Testeur">Testeur</option>
+    </select>
+    <span id="saveFeedback" class="save-status"></span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section-title">📚 Modules d’entraînement</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>Diagnostic</h3>
+      <p>30 questions aléatoires (français + maths) pour identifier tes points faibles.</p>
+      <a href="diagnostic.html" class="btn">Commencer le diagnostic →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🇫🇷</div>
+      <h3>Français</h3>
+      <p>Lexique, sens des mots, expressions, familles de mots — 75 exercices ciblés.</p>
+      <a href="entrainement-fr.html" class="btn">S’entraîner →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧮</div>
+      <h3>Mathématiques</h3>
+      <p>Problèmes, automatismes, grandeurs, proportionnalité — 75 exercices progressifs.</p>
+      <a href="entrainement-maths.html" class="btn">S’entraîner →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🗂️</div>
+      <h3>Flashcards</h3>
+      <p>Règles + exemples pour mémoriser durablement (révision espacée).</p>
+      <a href="flashcards.html" class="btn">Réviser →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>Suivi enseignant</h3>
+      <p>Tableau de bord, résultats par élève, alertes difficultés.</p>
+      <a href="suivi-enseignant.html" class="btn">Accès prof →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">📘</div>
+      <h3>Guide pédagogique</h3>
+      <p>Fondements scientifiques, barèmes, méthodologie DEPP.</p>
+      <a href="guide-travail-evaluations.html" class="btn">Lire le guide →</a>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <strong>🎯 Méthodologie validée par la DEPP</strong><br>
+    Chaque exercice est inspiré des items les moins réussis en REP+ (français : sens de « peine », famille de mots, expression ; maths : masse unitaire, périmètre, proportionnalité).<br>
+    Tous les résultats sont envoyés vers un tableau Google Sheets pour un suivi précis.
+  </div>
+</div>
+
+<div class="footer">
+  <p>Travailler évaluations nationales — Conçu à partir des rapports DEPP 2025 | Données anonymisées | Suivi Google Sheets intégré</p>
+</div>
+
+<script>
+  // URL de ton script Google Apps Script (déployé)
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXtYaj1izgW7vHXlINk7vl1eVj_vTnV9Gq4TRShSJDlwKbnHwScwUzOW5PwDn_mLfk/exec";
+
+  // Charger le prénom sauvegardé localement (pour rester cohérent sur toutes les pages)
+  const prenomSelect = document.getElementById('prenomSelect');
+  const saveFeedback = document.getElementById('saveFeedback');
+
+  // Restaurer le dernier prénom utilisé (depuis localStorage)
+  const savedPrenom = localStorage.getItem('elevePrenom');
+  if (savedPrenom && prenomSelect) {
+    prenomSelect.value = savedPrenom;
+  }
+
+  // Fonction pour enregistrer le choix dans Google Sheet (optionnel mais utile pour tracer les connexions)
+  async function enregistrerPrenom(prenom) {
+    if (!prenom) return;
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          prenom: prenom,
+          matiere: 'connexion',
+          competence: 'accueil',
+          exerciceId: 'selection_prenom',
+          reponse: 'connexion',
+          correct: 'true',
+          scoreMax: '1',
+          tempsMs: Date.now().toString()
+        })
+      });
+      saveFeedback.textContent = '✓ Enregistré';
+      setTimeout(() => { if(saveFeedback) saveFeedback.textContent = ''; }, 2000);
+    } catch(e) {
+      console.warn("Erreur envoi Google Sheet (non bloquante)");
+    }
+  }
+
+  // Quand l'élève change de prénom : sauvegarde locale + envoi optionnel au sheet
+  if (prenomSelect) {
+    prenomSelect.addEventListener('change', async function() {
+      const prenom = this.value;
+      if (prenom) {
+        localStorage.setItem('elevePrenom', prenom);
+        await enregistrerPrenom(prenom);
+      } else {
+        localStorage.removeItem('elevePrenom');
+      }
+    });
+  }
+
+  // Au chargement, si un prénom existe déjà, on l'enregistre silencieusement une fois (trace)
+  window.addEventListener('load', () => {
+    if (savedPrenom && savedPrenom !== "") {
+      enregistrerPrenom(savedPrenom);
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Entraînement maths — Travailler évaluations nationales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #09090f;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .header {
+      background: #111118;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    .logo span { color: #e8c87a; }
+    .student-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #09090f;
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .student-area label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: #5ecfb1;
+    }
+    select {
+      background: #1e1e2a;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+    .progress-bar {
+      background: #1e1e2a;
+      border-radius: 60px;
+      height: 8px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .progress-fill {
+      background: #5ecfb1;
+      width: 0%;
+      height: 8px;
+      border-radius: 60px;
+      transition: width 0.2s;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(240,237,232,0.5);
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 28px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .competence-badge {
+      display: inline-block;
+      background: rgba(94,207,177,0.15);
+      border: 1px solid rgba(94,207,177,0.3);
+      border-radius: 60px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-family: 'DM Mono', monospace;
+      color: #5ecfb1;
+      margin-bottom: 1rem;
+    }
+    .question {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: #1a1a24;
+      padding: 0.7rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .choice:hover {
+      background: #262632;
+    }
+    input[type="radio"] {
+      accent-color: #5ecfb1;
+      width: 18px;
+      height: 18px;
+    }
+    .choice-label {
+      font-size: 1rem;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      background: rgba(94,207,177,0.1);
+      border: 1px solid rgba(94,207,177,0.4);
+      color: #5ecfb1;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    button:hover {
+      background: rgba(94,207,177,0.25);
+    }
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .feedback.correct {
+      background: rgba(126,207,138,0.15);
+      border: 1px solid #7ecf8a;
+      color: #7ecf8a;
+      display: block;
+    }
+    .feedback.incorrect {
+      background: rgba(245,90,90,0.15);
+      border: 1px solid #f55a5a;
+      color: #f55a5a;
+      display: block;
+    }
+    .btn-secondary {
+      background: transparent;
+      border-color: rgba(255,255,255,0.2);
+      color: rgba(240,237,232,0.7);
+    }
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.7rem;
+      color: rgba(240,237,232,0.3);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 2rem;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem; }
+      .card { padding: 1.2rem; }
+      .question { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">Travailler <span>évaluations nationales</span></div>
+  <div class="student-area">
+    <label>👤 Élève</label>
+    <select id="prenomSelect">
+      <option value="">-- Sélectionne --</option>
+      <option value="Raphael">Raphael</option><option value="Heidi">Heidi</option><option value="Alice">Alice</option>
+      <option value="Norah">Norah</option><option value="Adèle">Adèle</option><option value="Kim">Kim</option>
+      <option value="Sheurley">Sheurley</option><option value="Iris">Iris</option><option value="Luc">Luc</option>
+      <option value="Trecy">Trecy</option><option value="Loris">Loris</option><option value="Léna">Léna</option>
+      <option value="Amandine">Amandine</option><option value="Ethan">Ethan</option><option value="Andryana">Andryana</option>
+      <option value="Kaysia">Kaysia</option><option value="Camila">Camila</option><option value="Cassie">Cassie</option>
+      <option value="Adriel">Adriel</option><option value="Testeur">Testeur</option>
+    </select>
+  </div>
+</div>
+
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="stats">
+    <span>🧮 Mathématiques — Calcul, problèmes, grandeurs</span>
+    <span id="sessionCounter">Exercice 0 / 75</span>
+  </div>
+
+  <div class="card" id="exerciseCard">
+    <div><span class="competence-badge" id="compBadge">M1</span></div>
+    <div class="question" id="questionText"></div>
+    <div class="choices" id="choicesContainer"></div>
+    <div class="actions">
+      <button id="validateBtn" class="btn-primary">✓ Vérifier</button>
+      <button id="skipBtn" class="btn-secondary">⏩ Passer (sans enregistrer)</button>
+    </div>
+    <div id="feedback" class="feedback"></div>
+  </div>
+</div>
+<div class="footer">
+  <p>Chaque réponse est envoyée au tableau de bord enseignant. Continue à ton rythme !</p>
+</div>
+
+<script>
+  // URL du script Google Apps Script (identique)
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXtYaj1izgW7vHXlINk7vl1eVj_vTnV9Gq4TRShSJDlwKbnHwScwUzOW5PwDn_mLfk/exec";
+
+  // --------------------------------------------------------------
+  // BANQUE D'EXERCICES MATHÉMATIQUES (15 compétences × 5 variantes)
+  const exercises = [
+    // M1 - Masse unitaire
+    { id: "M1_1", competence: "M1", text: "24 œufs pèsent 1,2 kg. Un œuf pèse :", choices: ["0,5 kg", "5 g", "500 g", "50 g"], correct: "50 g" },
+    { id: "M1_2", competence: "M1", text: "15 livres pèsent 6 kg. Un livre pèse :", choices: ["2,5 kg", "400 g", "0,4 kg", "250 g"], correct: "0,4 kg" },
+    { id: "M1_3", competence: "M1", text: "40 crayons pèsent 0,8 kg. Un crayon pèse :", choices: ["2 g", "0,02 kg", "200 g", "20 g"], correct: "20 g" },
+    { id: "M1_4", competence: "M1", text: "6 boîtes pèsent 2,4 kg. Une boîte pèse :", choices: ["4 kg", "0,04 kg", "40 g", "0,4 kg"], correct: "0,4 kg" },
+    { id: "M1_5", competence: "M1", text: "50 pièces pèsent 125 g. Une pièce pèse :", choices: ["0,25 g", "25 g", "250 g", "2,5 g"], correct: "2,5 g" },
+    // M2 - Relations dixièmes/centièmes/millièmes
+    { id: "M2_1", competence: "M2", text: "5 millièmes = 10 fois ?", choices: ["5 dix-millièmes", "5 centièmes", "5 dixièmes", "5 unités"], correct: "5 centièmes" },
+    { id: "M2_2", competence: "M2", text: "3 centièmes = 10 fois ?", choices: ["3 unités", "3 dizaines", "3 dixièmes", "3 millièmes"], correct: "3 dixièmes" },
+    { id: "M2_3", competence: "M2", text: "7 dixièmes = 10 fois ?", choices: ["7 centièmes", "7 millièmes", "7 dix-millièmes", "7 unités"], correct: "7 unités" },
+    { id: "M2_4", competence: "M2", text: "2 millièmes = 10 fois ?", choices: ["2 dix-millièmes", "2 centièmes", "2 dixièmes", "2 unités"], correct: "2 dix-millièmes" },
+    { id: "M2_5", competence: "M2", text: "4 centièmes = 10 fois ?", choices: ["4 unités", "4 dizaines", "4 dixièmes", "4 millièmes"], correct: "4 dixièmes" },
+    // M3 - Périmètre, longueur, largeur (variations)
+    { id: "M3_1", competence: "M3", text: "Périmètre = 300 m, longueur = 100 m. Largeur ?", choices: ["100 m", "200 m", "150 m", "50 m"], correct: "50 m" },
+    { id: "M3_2", competence: "M3", text: "Largeur = 40 m, longueur = 80 m. Périmètre ?", choices: ["120 m", "200 m", "280 m", "240 m"], correct: "240 m" },
+    { id: "M3_3", competence: "M3", text: "Périmètre = 400 cm, largeur = 50 cm. Longueur ?", choices: ["100 cm", "250 cm", "200 cm", "150 cm"], correct: "150 cm" },
+    { id: "M3_4", competence: "M3", text: "Longueur = 120 m, largeur = 30 m. Périmètre ?", choices: ["150 m", "240 m", "360 m", "300 m"], correct: "300 m" },
+    { id: "M3_5", competence: "M3", text: "Périmètre = 60 m, largeur = 5 m. Longueur ?", choices: ["10 m", "35 m", "15 m", "25 m"], correct: "25 m" },
+    // M4 - Proportionnalité (passage à l'unité)
+    { id: "M4_1", competence: "M4", text: "6 croissants = 9 €. 2 croissants = ?", choices: ["4,50 €", "1,50 €", "2 €", "3 €"], correct: "3 €" },
+    { id: "M4_2", competence: "M4", text: "15 stylos = 12 €. 5 stylos = ?", choices: ["3 €", "6 €", "2 €", "4 €"], correct: "4 €" },
+    { id: "M4_3", competence: "M4", text: "4 paquets = 10 €. 2 paquets = ?", choices: ["2,50 €", "7,50 €", "8 €", "5 €"], correct: "5 €" },
+    { id: "M4_4", competence: "M4", text: "10 tickets = 8 €. 3 tickets = ?", choices: ["3 €", "1,60 €", "2 €", "2,40 €"], correct: "2,40 €" },
+    { id: "M4_5", competence: "M4", text: "9 cahiers = 13,50 €. 3 cahiers = ?", choices: ["6,75 €", "3 €", "5 €", "4,50 €"], correct: "4,50 €" },
+    // M5 - Périmètre rectangle quadrillage
+    { id: "M5_1", competence: "M5", text: "Rectangle de 5 carreaux sur 3. Périmètre (cm) ?", choices: ["15 cm", "20 cm", "18 cm", "16 cm"], correct: "16 cm" },
+    { id: "M5_2", competence: "M5", text: "Rectangle de 7 carreaux sur 2. Périmètre ?", choices: ["14 cm", "20 cm", "16 cm", "18 cm"], correct: "18 cm" },
+    { id: "M5_3", competence: "M5", text: "Rectangle de 4 carreaux sur 4. Périmètre ?", choices: ["12 cm", "20 cm", "18 cm", "16 cm"], correct: "16 cm" },
+    { id: "M5_4", competence: "M5", text: "Rectangle de 6 carreaux sur 1. Périmètre ?", choices: ["12 cm", "16 cm", "10 cm", "14 cm"], correct: "14 cm" },
+    { id: "M5_5", competence: "M5", text: "Rectangle de 8 carreaux sur 5. Périmètre ?", choices: ["24 cm", "28 cm", "30 cm", "26 cm"], correct: "26 cm" },
+    // M6 - Multiplication décimal × entier
+    { id: "M6_1", competence: "M6", text: "2,3 × 4 = ?", choices: ["8,2", "9,6", "8,6", "9,2"], correct: "9,2" },
+    { id: "M6_2", competence: "M6", text: "5,6 × 3 = ?", choices: ["15,8", "17,8", "14,8", "16,8"], correct: "16,8" },
+    { id: "M6_3", competence: "M6", text: "7,2 × 6 = ?", choices: ["42,2", "44,2", "41,2", "43,2"], correct: "43,2" },
+    { id: "M6_4", competence: "M6", text: "1,8 × 7 = ?", choices: ["11,6", "13,6", "10,6", "12,6"], correct: "12,6" },
+    { id: "M6_5", competence: "M6", text: "4,5 × 8 = ?", choices: ["35,0", "37,0", "34,0", "36,0"], correct: "36,0" },
+    // M7 - Monnaie rendue
+    { id: "M7_1", competence: "M7", text: "2 baguettes à 1,10 €, donne 5 €. Rendue ?", choices: ["2,20 €", "3,00 €", "2,50 €", "2,80 €"], correct: "2,80 €" },
+    { id: "M7_2", competence: "M7", text: "4 sodas à 1,25 €, donne 10 €. Rendue ?", choices: ["4,50 €", "5,50 €", "6 €", "5 €"], correct: "5 €" },
+    { id: "M7_3", competence: "M7", text: "1 livre à 8,90 €, donne 20 €. Rendue ?", choices: ["10,10 €", "12,10 €", "9,10 €", "11,10 €"], correct: "11,10 €" },
+    { id: "M7_4", competence: "M7", text: "3 pains au chocolat à 1,20 €, donne 5 €. Rendue ?", choices: ["1,20 €", "1,60 €", "1,00 €", "1,40 €"], correct: "1,40 €" },
+    { id: "M7_5", competence: "M7", text: "2 tickets à 2,40 €, donne 10 €. Rendue ?", choices: ["4,80 €", "5,60 €", "4,20 €", "5,20 €"], correct: "5,20 €" },
+    // M8 - Combinaisons
+    { id: "M8_1", competence: "M8", text: "4 pantalons, 6 chemises → combien de tenues ?", choices: ["10", "20", "30", "24"], correct: "24" },
+    { id: "M8_2", competence: "M8", text: "2 pulls, 5 jupes → combien de tenues ?", choices: ["7", "12", "15", "10"], correct: "10" },
+    { id: "M8_3", competence: "M8", text: "3 chaussures, 4 chapeaux → combien d’associations ?", choices: ["7", "15", "8", "12"], correct: "12" },
+    { id: "M8_4", competence: "M8", text: "7 glaces, 3 parfums → combien de combinaisons ?", choices: ["10", "14", "28", "21"], correct: "21" },
+    { id: "M8_5", competence: "M8", text: "10 t-shirts, 2 shorts → combien de tenues ?", choices: ["12", "5", "30", "20"], correct: "20" },
+    // M9 - Calcul d'heure de fin
+    { id: "M9_1", competence: "M9", text: "Début 9h30, durée 20 min → fin ?", choices: ["9h40", "10h00", "9h55", "9h50"], correct: "9h50" },
+    { id: "M9_2", competence: "M9", text: "Début 14h15, pause 45 min → fin ?", choices: ["14h45", "15h15", "14h30", "15h00"], correct: "15h00" },
+    { id: "M9_3", competence: "M9", text: "Début 8h50, exercice 30 min → fin ?", choices: ["9h10", "9h30", "9h00", "9h20"], correct: "9h20" },
+    { id: "M9_4", competence: "M9", text: "Début 11h05, film 1h10 → fin ?", choices: ["12h05", "12h20", "11h45", "12h15"], correct: "12h15" },
+    { id: "M9_5", competence: "M9", text: "Début 13h40, réunion 50 min → fin ?", choices: ["14h20", "14h40", "13h90", "14h30"], correct: "14h30" },
+    // M10 - Coût total (prix × personnes × jours)
+    { id: "M10_1", competence: "M10", text: "2 pers., 5 jours, 30 €/jour → total ?", choices: ["150 €", "200 €", "250 €", "300 €"], correct: "300 €" },
+    { id: "M10_2", competence: "M10", text: "4 pers., 3 jours, 25 €/jour → total ?", choices: ["400 €", "200 €", "500 €", "300 €"], correct: "300 €" },
+    { id: "M10_3", competence: "M10", text: "1 pers., 10 jours, 45 €/jour → total ?", choices: ["400 €", "500 €", "550 €", "450 €"], correct: "450 €" },
+    { id: "M10_4", competence: "M10", text: "6 pers., 2 jours, 20 €/jour → total ?", choices: ["200 €", "280 €", "300 €", "240 €"], correct: "240 €" },
+    { id: "M10_5", competence: "M10", text: "3 pers., 4 jours, 35 €/jour → total ?", choices: ["350 €", "400 €", "450 €", "420 €"], correct: "420 €" },
+    // M11 - Partage avec reste
+    { id: "M11_1", competence: "M11", text: "45 pièces, donne 6 à chaque comp., reste 3. Nb comp. ?", choices: ["6", "8", "5", "7"], correct: "7" },
+    { id: "M11_2", competence: "M11", text: "80 billes, donne 9 à chaque ami, reste 8. Amis ?", choices: ["7", "9", "10", "8"], correct: "8" },
+    { id: "M11_3", competence: "M11", text: "100 €, donne 12 € à chaque enfant, reste 4 €. Enfants ?", choices: ["7", "9", "6", "8"], correct: "8" },
+    { id: "M11_4", competence: "M11", text: "30 bonbons, donne 4 à chaque élève, reste 2. Élèves ?", choices: ["6", "5", "8", "7"], correct: "7" },
+    { id: "M11_5", competence: "M11", text: "63 timbres, donne 10 à chaque coll., reste 3. Coll. ?", choices: ["5", "7", "8", "6"], correct: "6" },
+    // M12 - Opération pour total litres
+    { id: "M12_1", competence: "M12", text: "10 bouteilles de 0,5 L → total litres ?", choices: ["10 + 0,5", "10 × 0,5 × prix", "10 + 0,5 + prix", "10 × 0,5"], correct: "10 × 0,5" },
+    { id: "M12_2", competence: "M12", text: "8 bouteilles de 0,75 L → total litres ?", choices: ["8 + 0,75", "8 × 0,75 × 1", "8 × 0,75 + 1", "8 × 0,75"], correct: "8 × 0,75" },
+    { id: "M12_3", competence: "M12", text: "12 bouteilles de 0,33 L → total litres ?", choices: ["12 + 0,33", "12 × 0,33 × 0,5", "12 + 0,33 + 0,5", "12 × 0,33"], correct: "12 × 0,33" },
+    { id: "M12_4", competence: "M12", text: "6 bouteilles de 1,25 L → total litres ?", choices: ["6 + 1,25", "6 × 1,25 × 2", "6 + 1,25 + 2", "6 × 1,25"], correct: "6 × 1,25" },
+    { id: "M12_5", competence: "M12", text: "20 bouteilles de 0,2 L → total litres ?", choices: ["20 + 0,2", "20 × 0,2 × 0,1", "20 + 0,2 + 0,1", "20 × 0,2"], correct: "20 × 0,2" },
+    // M13 - Économie d'eau
+    { id: "M13_1", competence: "M13", text: "Douche 60 L, bain 150 L. Économie sur 7 jours ?", choices: ["420 L", "1050 L", "210 L", "630 L"], correct: "630 L" },
+    { id: "M13_2", competence: "M13", text: "Douche 90 L, bain 180 L. Économie sur 5 jours ?", choices: ["540 L", "900 L", "270 L", "450 L"], correct: "450 L" },
+    { id: "M13_3", competence: "M13", text: "Douche 70 L, bain 200 L. Économie sur 6 jours ?", choices: ["840 L", "420 L", "1260 L", "780 L"], correct: "780 L" },
+    { id: "M13_4", competence: "M13", text: "Douche 45 L, bain 120 L. Économie sur 10 jours ?", choices: ["450 L", "1200 L", "600 L", "750 L"], correct: "750 L" },
+    { id: "M13_5", competence: "M13", text: "Douche 100 L, bain 250 L. Économie sur 4 jours ?", choices: ["400 L", "800 L", "200 L", "600 L"], correct: "600 L" },
+    // M14 - Moitié d'un décimal
+    { id: "M14_1", competence: "M14", text: "Moitié de 6,20 ?", choices: ["3,20", "3,00", "3,15", "3,10"], correct: "3,10" },
+    { id: "M14_2", competence: "M14", text: "Moitié de 9,14 ?", choices: ["4,50", "4,60", "4,55", "4,57"], correct: "4,57" },
+    { id: "M14_3", competence: "M14", text: "Moitié de 15,6 ?", choices: ["7,6", "7,5", "8,0", "7,8"], correct: "7,8" },
+    { id: "M14_4", competence: "M14", text: "Moitié de 2,18 ?", choices: ["1,10", "1,08", "1,19", "1,09"], correct: "1,09" },
+    { id: "M14_5", competence: "M14", text: "Moitié de 100,4 ?", choices: ["50,4", "50,0", "50,1", "50,2"], correct: "50,2" },
+    // M15 - Équation simple
+    { id: "M15_1", competence: "M15", text: "Nombre + 3 = moitié de 200. Quel nombre ?", choices: ["103", "100", "99", "97"], correct: "97" },
+    { id: "M15_2", competence: "M15", text: "Nombre + 10 = moitié de 500. ?", choices: ["260", "250", "255", "240"], correct: "240" },
+    { id: "M15_3", competence: "M15", text: "Nombre + 2 = moitié de 80. ?", choices: ["40", "42", "36", "38"], correct: "38" },
+    { id: "M15_4", competence: "M15", text: "Nombre + 8 = moitié de 300. ?", choices: ["158", "150", "145", "142"], correct: "142" },
+    { id: "M15_5", competence: "M15", text: "Nombre + 6 = moitié de 100. ?", choices: ["56", "50", "46", "44"], correct: "44" }
+  ];
+
+  // --------------------------------------------------------------
+  // État
+  let currentIndex = 0;
+  let sessionAnswers = [];
+  let prenom = "";
+
+  const prenomSelect = document.getElementById('prenomSelect');
+  const compBadge = document.getElementById('compBadge');
+  const questionText = document.getElementById('questionText');
+  const choicesContainer = document.getElementById('choicesContainer');
+  const validateBtn = document.getElementById('validateBtn');
+  const skipBtn = document.getElementById('skipBtn');
+  const feedbackDiv = document.getElementById('feedback');
+  const progressFill = document.getElementById('progressFill');
+  const sessionCounterSpan = document.getElementById('sessionCounter');
+
+  function loadProgress() {
+    const savedIndex = localStorage.getItem('maths_currentIndex');
+    if (savedIndex !== null && !isNaN(parseInt(savedIndex))) {
+      currentIndex = parseInt(savedIndex);
+      if (currentIndex >= exercises.length) currentIndex = exercises.length - 1;
+      if (currentIndex < 0) currentIndex = 0;
+    } else currentIndex = 0;
+    const savedAnswers = localStorage.getItem('maths_sessionAnswers');
+    if (savedAnswers) {
+      try { sessionAnswers = JSON.parse(savedAnswers); } catch(e) { sessionAnswers = []; }
+    } else sessionAnswers = [];
+    updateProgressDisplay();
+  }
+
+  function saveProgress() {
+    localStorage.setItem('maths_currentIndex', currentIndex);
+    localStorage.setItem('maths_sessionAnswers', JSON.stringify(sessionAnswers));
+  }
+
+  function updateProgressDisplay() {
+    const total = exercises.length;
+    const answered = sessionAnswers.length;
+    const percent = (answered / total) * 100;
+    progressFill.style.width = percent + "%";
+    sessionCounterSpan.innerText = `Exercice ${answered} / ${total}`;
+  }
+
+  function displayExercise() {
+    const ex = exercises[currentIndex];
+    if (!ex) return;
+    compBadge.innerText = ex.competence;
+    questionText.innerText = ex.text;
+    let html = '';
+    ex.choices.forEach((choice, idx) => {
+      const letter = String.fromCharCode(65+idx);
+      html += `
+        <label class="choice">
+          <input type="radio" name="choice" value="${escapeHtml(choice)}">
+          <span class="choice-label">${letter}. ${escapeHtml(choice)}</span>
+        </label>
+      `;
+    });
+    choicesContainer.innerHTML = html;
+    feedbackDiv.className = 'feedback';
+    feedbackDiv.style.display = 'none';
+    const radios = document.querySelectorAll('input[name="choice"]');
+    radios.forEach(r => r.checked = false);
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  async function sendToSheet(prenom, matiere, competence, exerciceId, reponse, correct, tempsMs = 0) {
+    if (!prenom) return;
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          prenom: prenom,
+          matiere: matiere,
+          competence: competence,
+          exerciceId: exerciceId,
+          reponse: reponse,
+          correct: correct ? "true" : "false",
+          scoreMax: "1",
+          tempsMs: tempsMs.toString()
+        })
+      });
+    } catch(e) { console.warn("Erreur envoi sheet", e); }
+  }
+
+  async function checkAnswer() {
+    const selectedRadio = document.querySelector('input[name="choice"]:checked');
+    if (!selectedRadio) {
+      feedbackDiv.innerText = "⚠️ Choisis une réponse avant de valider.";
+      feedbackDiv.className = 'feedback incorrect';
+      feedbackDiv.style.display = 'block';
+      return;
+    }
+    const userAnswer = selectedRadio.value;
+    const ex = exercises[currentIndex];
+    const isCorrect = (userAnswer === ex.correct);
+    sessionAnswers.push({ id: ex.id, correct: isCorrect, answer: userAnswer });
+    saveProgress();
+    updateProgressDisplay();
+
+    feedbackDiv.innerText = isCorrect ? "✔️ Bonne réponse !" : `❌ Mauvaise réponse. La bonne réponse était : ${ex.correct}`;
+    feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+    feedbackDiv.style.display = 'block';
+
+    await sendToSheet(prenom, "maths", ex.competence, ex.id, userAnswer, isCorrect, 0);
+
+    setTimeout(() => {
+      if (currentIndex + 1 < exercises.length) {
+        currentIndex++;
+        displayExercise();
+        document.getElementById('exerciseCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        feedbackDiv.innerText = "🎉 Félicitations ! Tu as terminé tous les exercices de maths. Retourne à l'accueil ou continue en français.";
+        feedbackDiv.className = 'feedback correct';
+        feedbackDiv.style.display = 'block';
+        validateBtn.disabled = true;
+        skipBtn.disabled = true;
+      }
+      saveProgress();
+    }, 1000);
+  }
+
+  function skipExercise() {
+    if (currentIndex + 1 < exercises.length) {
+      currentIndex++;
+      displayExercise();
+      feedbackDiv.style.display = 'none';
+      saveProgress();
+    } else {
+      feedbackDiv.innerText = "Tu as déjà terminé tous les exercices !";
+      feedbackDiv.className = 'feedback correct';
+      feedbackDiv.style.display = 'block';
+    }
+  }
+
+  function initPrenom() {
+    const saved = localStorage.getItem('elevePrenom');
+    if (saved && prenomSelect.querySelector(`option[value="${saved}"]`)) {
+      prenomSelect.value = saved;
+      prenom = saved;
+    } else prenom = "";
+    prenomSelect.addEventListener('change', () => {
+      prenom = prenomSelect.value;
+      if (prenom) localStorage.setItem('elevePrenom', prenom);
+      else localStorage.removeItem('elevePrenom');
+    });
+  }
+
+  function init() {
+    initPrenom();
+    loadProgress();
+    displayExercise();
+    validateBtn.addEventListener('click', checkAnswer);
+    skipBtn.addEventListener('click', skipExercise);
+  }
+
+  init();
+</script>
+</body>
+</html>

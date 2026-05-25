@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Suivi enseignant — Travailler évaluations nationales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #09090f;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .header {
+      background: #111118;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    .logo span { color: #e8c87a; }
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #5ecfb1;
+      padding-left: 1rem;
+    }
+    .card {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    .card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #e8c87a;
+    }
+    .step {
+      margin-bottom: 1.2rem;
+      padding-left: 1rem;
+      border-left: 3px solid #5ecfb1;
+    }
+    .step strong {
+      color: #5ecfb1;
+    }
+    code {
+      background: #1e1e2a;
+      padding: 0.2rem 0.4rem;
+      border-radius: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+    }
+    input, textarea {
+      width: 100%;
+      background: #1e1e2a;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 0.8rem;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      margin: 0.5rem 0 1rem;
+    }
+    button {
+      background: rgba(94,207,177,0.1);
+      border: 1px solid rgba(94,207,177,0.4);
+      color: #5ecfb1;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    button:hover {
+      background: rgba(94,207,177,0.25);
+    }
+    .iframe-container {
+      background: #0c0c14;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-top: 1rem;
+    }
+    iframe {
+      width: 100%;
+      height: 70vh;
+      border: none;
+      background: white;
+    }
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.7rem;
+      color: rgba(240,237,232,0.3);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 2rem;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(94,207,177,0.15);
+      border: 1px solid rgba(94,207,177,0.3);
+      border-radius: 60px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-family: 'DM Mono', monospace;
+      color: #5ecfb1;
+      margin-bottom: 1rem;
+    }
+    hr {
+      border-color: rgba(255,255,255,0.05);
+      margin: 1.5rem 0;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">Travailler <span>évaluations nationales</span></div>
+  <div style="font-size:0.8rem;">👩‍🏫 Suivi enseignant</div>
+</div>
+
+<div class="container">
+  <div class="section-title">📊 Tableau de bord des résultats</div>
+
+  <div class="card">
+    <h3>🔗 1. Accéder à votre Google Sheet</h3>
+    <div class="step">
+      <strong>✎ Rappel :</strong> Tous les résultats des élèves (diagnostic, entraînements français/maths) sont automatiquement envoyés vers le Google Sheet que vous avez configuré avec le script Apps Script.
+    </div>
+    <div class="step">
+      <strong>📌 Pour consulter les données en direct :</strong>
+      <ol style="margin-left: 1.5rem; margin-top: 0.5rem; color: rgba(240,237,232,0.7);">
+        <li>Ouvrez le Google Sheet que vous avez utilisé lors du déploiement du script.</li>
+        <li>L’onglet <code>Resultats</code> contient toutes les lignes avec : date, prénom, matière, compétence, exercice, réponse, succès, etc.</li>
+        <li>Vous pouvez appliquer des filtres (par prénom, par compétence, par matière) pour analyser les progrès.</li>
+      </ol>
+    </div>
+    <div class="step">
+      <strong>🔁 Si vous avez perdu le lien :</strong> Rendez-vous dans votre Google Drive, recherchez le fichier intitulé “Résultats évaluations nationales” (ou le nom que vous lui avez donné).
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📎 2. Intégrer un aperçu du Sheet dans cette page (optionnel)</h3>
+    <div class="step">
+      <strong>💡 Astuce :</strong> Vous pouvez afficher directement votre Google Sheet ci-dessous en le partageant en lecture seule.
+    </div>
+    <div class="step">
+      <strong>➊ Partagez votre Sheet :</strong>
+      <ul style="margin-left: 1.5rem;">
+        <li>Dans votre Google Sheet, cliquez sur <strong>« Partager »</strong> (en haut à droite).</li>
+        <li>Modifiez l’accès : <strong>« Toute personne disposant du lien »</strong> → rôle <strong>« Lecteur »</strong>.</li>
+        <li>Copiez le lien (il ressemble à <code>https://docs.google.com/spreadsheets/d/XXXXXXXXXXXXXX/edit?usp=sharing</code>).</li>
+      </ul>
+    </div>
+    <div class="step">
+      <strong>➋ Collez l’ID ou l’URL du Sheet :</strong>
+      <input type="text" id="sheetUrlInput" placeholder="Ex: https://docs.google.com/spreadsheets/d/1ABC123_editez..." style="margin-bottom: 0.5rem;">
+      <button id="loadSheetBtn">Afficher l’aperçu</button>
+    </div>
+    <div class="iframe-container" id="iframeContainer" style="display: none;">
+      <iframe id="sheetIframe" title="Aperçu Google Sheet"></iframe>
+    </div>
+    <div id="errorMsg" style="color: #f55a5a; margin-top: 0.5rem; font-size: 0.8rem;"></div>
+  </div>
+
+  <div class="card">
+    <h3>📈 3. Exploiter les données – conseils</h3>
+    <div class="step">
+      <strong>📋 Colonnes disponibles :</strong> <code>DateHeure, Prenom, Matiere, Competence, ExerciceId, ReponseDonnee, Correct, ScoreMax, TempsMs</code>
+    </div>
+    <div class="step">
+      <strong>📊 Exemples d’analyses rapides (dans Google Sheets) :</strong>
+      <ul style="margin-left: 1.5rem;">
+        <li>Filtrer par <strong>Matiere = francais</strong> pour voir les résultats en français.</li>
+        <li>Filtrer par <strong>Correct = NON</strong> pour identifier les compétences non maîtrisées.</li>
+        <li>Créer un tableau croisé dynamique : <em>Lignes = Prenom, Colonnes = Competence, Valeurs = Correct (moyenne)</em>.</li>
+        <li>Graphique d’évolution : utiliser la colonne <strong>DateHeure</strong> pour suivre les progrès dans le temps.</li>
+      </ul>
+    </div>
+    <div class="step">
+      <strong>📥 Télécharger les résultats :</strong> Dans votre Sheet, allez dans <strong>Fichier → Télécharger → CSV</strong> pour importer dans un autre logiciel.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ 4. Confidentialité</h3>
+    <p>Les prénoms sont stockés dans le Sheet. Si vous souhaitez anonymiser davantage, remplacez les prénoms par des codes dans la colonne <code>Prenom</code> du Sheet (les futures entrées utiliseront les prénoms saisis par les élèves). Pensez à supprimer les anciennes lignes sensibles.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Suivi enseignant — Les données sont hébergées sur votre Google Sheet, sous votre contrôle.<br>
+  Pour toute question technique, reportez-vous à la documentation du projet.</p>
+</div>
+
+<script>
+  const sheetUrlInput = document.getElementById('sheetUrlInput');
+  const loadBtn = document.getElementById('loadSheetBtn');
+  const iframeContainer = document.getElementById('iframeContainer');
+  const sheetIframe = document.getElementById('sheetIframe');
+  const errorMsg = document.getElementById('errorMsg');
+
+  // Charger un éventuel ID sauvegardé dans localStorage
+  const savedUrl = localStorage.getItem('teacher_sheet_url');
+  if (savedUrl) {
+    sheetUrlInput.value = savedUrl;
+  }
+
+  function extractIdFromUrl(url) {
+    // Extrait l'ID du Google Sheet à partir d'une URL classique
+    const regex = /\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
+  function displaySheetPreview() {
+    let rawUrl = sheetUrlInput.value.trim();
+    if (!rawUrl) {
+      errorMsg.textContent = "Veuillez entrer l’URL ou l’ID du Google Sheet.";
+      return;
+    }
+    let sheetId = rawUrl;
+    // Si c'est une URL complète, on extrait l'ID
+    if (rawUrl.includes('docs.google.com/spreadsheets')) {
+      const extracted = extractIdFromUrl(rawUrl);
+      if (extracted) {
+        sheetId = extracted;
+      } else {
+        errorMsg.textContent = "URL invalide. Utilisez le lien de partage ou l’ID.";
+        return;
+      }
+    }
+    // Construire l'URL d'aperçu (publier en mode "html" simple)
+    // Meilleure option : utiliser l'iframe d'intégration Google Sheets
+    const previewUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/preview`;
+    sheetIframe.src = previewUrl;
+    iframeContainer.style.display = "block";
+    errorMsg.textContent = "";
+    // Sauvegarder l'URL pour la prochaine fois
+    localStorage.setItem('teacher_sheet_url', rawUrl);
+  }
+
+  loadBtn.addEventListener('click', displaySheetPreview);
+</script>
+</body>
+</html>
