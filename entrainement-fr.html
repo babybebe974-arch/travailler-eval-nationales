@@ -213,7 +213,7 @@
 <div class="container">
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="stats">
-    <span>📚 Français — Lexique</span>
+    <span>📚 Français — Grammaire, conjugaison, orthographe, lexique</span>
     <span id="sessionCounter">Exercice 0 / 75</span>
   </div>
 
@@ -233,113 +233,144 @@
 </div>
 
 <script>
-  // --------------------------------------------------------------
-  // URL de ton script Google Apps Script (déployé)
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXtYaj1izgW7vHXlINk7vl1eVj_vTnV9Gq4TRShSJDlwKbnHwScwUzOW5PwDn_mLfk/exec";
 
   // --------------------------------------------------------------
   // BANQUE D'EXERCICES FRANÇAIS (15 compétences × 5 variantes)
-  // Chaque objet : { id, competence, text, choices, correct }
+  // Compétences : Conjugaison (présent, imparfait, passé composé, futur)
+  //              Grammaire (nature, fonctions)
+  //              Orthographe (accords)
+  //              Lexique (F1-F8, F11-F15)
   const exercises = [
-    // F1 - Sens de "peine"
-    { id: "F1_1", competence: "F1", text: "Il a eu peine à terminer son dessin.", choices: ["difficulté", "chagrin", "justesse", "joie"], correct: "difficulté" },
-    { id: "F1_2", competence: "F1", text: "La nouvelle lui a fait de la peine.", choices: ["difficulté", "joie", "chagrin", "justesse"], correct: "chagrin" },
-    { id: "F1_3", competence: "F1", text: "J’ai à peine eu le temps de dire bonjour.", choices: ["chagrin", "difficulté", "joie", "justesse"], correct: "justesse" },
-    { id: "F1_4", competence: "F1", text: "Elle peine à soulever le cartable.", choices: ["justesse", "difficulté", "chagrin", "joie"], correct: "difficulté" },
-    { id: "F1_5", competence: "F1", text: "Depuis son départ, il vit avec peine.", choices: ["joie", "justesse", "difficulté", "chagrin"], correct: "chagrin" },
-    // F2 - Intrus émotion
-    { id: "F2_1", competence: "F2", text: "Lequel n’est pas une émotion ?", choices: ["panique", "chaise", "joie", "tristesse"], correct: "chaise" },
-    { id: "F2_2", competence: "F2", text: "Lequel n’est pas une émotion ?", choices: ["table", "colère", "peur", "surprise"], correct: "table" },
-    { id: "F2_3", competence: "F2", text: "Lequel n’est pas une émotion ?", choices: ["angoissse", "vélo", "sérénité", "inquiétude"], correct: "vélo" },
-    { id: "F2_4", competence: "F2", text: "Lequel n’est pas une émotion ?", choices: ["crayon", "dégoût", "admiration", "fierté"], correct: "crayon" },
-    { id: "F2_5", competence: "F2", text: "Lequel n’est pas une émotion ?", choices: ["gêne", "ennui", "excitation", "porte"], correct: "porte" },
-    // F3 - Famille main
-    { id: "F3_1", competence: "F3", text: "Trouve le mot de la même famille que manuel, manucure, manuscrit.", choices: ["main", "manoir", "manteau", "manger"], correct: "main" },
-    { id: "F3_2", competence: "F3", text: "Même consigne.", choices: ["manoir", "main", "malice", "mandat"], correct: "main" },
-    { id: "F3_3", competence: "F3", text: "Même consigne.", choices: ["manufacturier", "malin", "maman", "main"], correct: "main" },
-    { id: "F3_4", competence: "F3", text: "Même consigne.", choices: ["maintenir", "manuel", "maison", "main"], correct: "main" },
-    { id: "F3_5", competence: "F3", text: "Même consigne.", choices: ["manucure", "main", "mandarine", "manche"], correct: "main" },
-    // F4 - Remplacer "parle de"
-    { id: "F4_1", competence: "F4", text: "Remplace « parle de » : Le documentaire parle de la pollution.", choices: ["oublie", "évoque", "cache", "ignore"], correct: "évoque" },
-    { id: "F4_2", competence: "F4", text: "L’auteur parle de son enfance.", choices: ["supprime", "efface", "chante", "raconte"], correct: "raconte" },
-    { id: "F4_3", competence: "F4", text: "Cet article parle de la guerre.", choices: ["traite de", "fuit", "détruit", "salit"], correct: "traite de" },
-    { id: "F4_4", competence: "F4", text: "Dans son discours, il parle de ses projets.", choices: ["dissimule", "abîme", "expose", "refuse"], correct: "expose" },
-    { id: "F4_5", competence: "F4", text: "Le poème parle de l’amour.", choices: ["critique", "ignore", "déteste", "célèbre"], correct: "célèbre" },
-    // F5 - Même mot
-    { id: "F5_1", competence: "F5", text: "Le suspect a été … en justice.", choices: ["convoqué", "jugé", "estimé", "puni"], correct: "jugé" },
-    { id: "F5_2", competence: "F5", text: "La … est tombée.", choices: ["lumière", "porte", "pluie", "fenêtre"], correct: "pluie" },
-    { id: "F5_3", competence: "F5", text: "Il a … une nouvelle idée.", choices: ["perdu", "acheté", "posé", "trouvé"], correct: "trouvé" },
-    { id: "F5_4", competence: "F5", text: "Le … du film est triste.", choices: ["milieu", "fin", "côté", "début"], correct: "début" },
-    { id: "F5_5", competence: "F5", text: "On a … la séance.", choices: ["fermé", "ouvert", "écrit", "levé"], correct: "levé" },
-    // F6 - Nom d'agent
-    { id: "F6_1", competence: "F6", text: "Lequel est construit comme « chanteur » ?", choices: ["longueur", "danseur", "chaleur", "hauteur"], correct: "danseur" },
-    { id: "F6_2", competence: "F6", text: "Lequel est construit comme « vendeur » ?", choices: ["grandeur", "peur", "bonheur", "mangeur"], correct: "mangeur" },
-    { id: "F6_3", competence: "F6", text: "Lequel est construit comme « joueur » ?", choices: ["blancheur", "rougeur", "écureuil", "coureur"], correct: "coureur" },
-    { id: "F6_4", competence: "F6", text: "Lequel est construit comme « nageur » ?", choices: ["hauteur", "sauteur", "pâtissier", "chaleur"], correct: "sauteur" },
-    { id: "F6_5", competence: "F6", text: "Lequel est construit comme « liseur » ?", choices: ["travailleur", "hauteur", "longueur", "chaleur"], correct: "travailleur" },
-    // F7 - Préfixe mal-
-    { id: "F7_1", competence: "F7", text: "Trouve l’intrus (pas le sens de mal-).", choices: ["malpropre", "maladroit", "malin", "malchanceux"], correct: "malin" },
-    { id: "F7_2", competence: "F7", text: "Trouve l’intrus.", choices: ["malbouffe", "malentendu", "mallette", "malveillant"], correct: "mallette" },
-    { id: "F7_3", competence: "F7", text: "Trouve l’intrus.", choices: ["malformation", "malédiction", "maladresse", "malice"], correct: "malice" },
-    { id: "F7_4", competence: "F7", text: "Trouve l’intrus.", choices: ["malhonnête", "malhabile", "malheureux", "malaxer"], correct: "malaxer" },
-    { id: "F7_5", competence: "F7", text: "Trouve l’intrus.", choices: ["malnutrition", "malpoli", "malin", "malsain"], correct: "malin" },
-    // F8 - Sens de "chronique"
-    { id: "F8_1", competence: "F8", text: "Une maladie chronique dure...", choices: ["peu", "jamais", "longtemps", "parfois"], correct: "longtemps" },
-    { id: "F8_2", competence: "F8", text: "Un chômeur chronique est au chômage...", choices: ["depuis peu", "souvent", "jamais", "rarement"], correct: "souvent" },
-    { id: "F8_3", competence: "F8", text: "Un retard chronique signifie...", choices: ["exceptionnel", "habituel", "inexistant", "unique"], correct: "habituel" },
-    { id: "F8_4", competence: "F8", text: "Un menteur chronique ment...", choices: ["parfois", "jamais", "rarement", "toujours"], correct: "toujours" },
-    { id: "F8_5", competence: "F8", text: "Une douleur chronique est...", choices: ["passagère", "imaginaire", "légère", "permanente"], correct: "permanente" },
-    // F9 - Famille permissive
-    { id: "F9_1", competence: "F9", text: "« Permissif » vient du verbe :", choices: ["percevoir", "permettre", "permuter", "perdre"], correct: "permettre" },
-    { id: "F9_2", competence: "F9", text: "Lequel est de la même famille ?", choices: ["perte", "personne", "permission", "perche"], correct: "permission" },
-    { id: "F9_3", competence: "F9", text: "Lequel est de la même famille ?", choices: ["périr", "perler", "percer", "permis"], correct: "permis" },
-    { id: "F9_4", competence: "F9", text: "Le contraire de permissif est :", choices: ["laxiste", "compréhensif", "tolérant", "rigoureux"], correct: "rigoureux" },
-    { id: "F9_5", competence: "F9", text: "Une mère permissive est :", choices: ["stricte", "absente", "violente", "tolérante"], correct: "tolérante" },
-    // F10 - Lieu (bibliothèque)
-    { id: "F10_1", competence: "F10", text: "Où trouve-t-on des romans et essais ?", choices: ["musée", "cinéma", "stade", "bibliothèque"], correct: "bibliothèque" },
-    { id: "F10_2", competence: "F10", text: "Où consulte-t-on des livres en silence ?", choices: ["gare", "bibliothèque", "marché", "piscine"], correct: "bibliothèque" },
-    { id: "F10_3", competence: "F10", text: "Où peut-on emprunter des ouvrages ?", choices: ["école", "mairie", "hôpital", "bibliothèque"], correct: "bibliothèque" },
-    { id: "F10_4", competence: "F10", text: "Lieu avec étagères et lecteurs silencieux :", choices: ["bibliothèque", "café", "magasin", "usine"], correct: "bibliothèque" },
-    { id: "F10_5", competence: "F10", text: "Où trouve-t-on des bandes dessinées ?", choices: ["salle de sport", "bureau de tabac", "restaurant", "bibliothèque"], correct: "bibliothèque" },
-    // F11 - Divers suffixes
-    { id: "F11_1", competence: "F11", text: "« Lavable » signifie :", choices: ["qui lave", "lavé", "qui se lave", "que l’on peut laver"], correct: "que l’on peut laver" },
-    { id: "F11_2", competence: "F11", text: "« Lisible » signifie :", choices: ["qui lit", "lu", "que l’on peut lire", "qui se lit"], correct: "que l’on peut lire" },
-    { id: "F11_3", competence: "F11", text: "« Peureux » signifie :", choices: ["qui a peur", "qui fait peur", "qui est peur", "peur"], correct: "qui a peur" },
-    { id: "F11_4", competence: "F11", text: "« Nettoyage » désigne :", choices: ["le résultat", "l’outil", "la personne", "l’action de nettoyer"], correct: "l’action de nettoyer" },
-    { id: "F11_5", competence: "F11", text: "« Émotion » vient du verbe :", choices: ["émotif", "moteur", "motion", "émouvoir"], correct: "émouvoir" },
-    // F12 - Sens de donner
-    { id: "F12_1", competence: "F12", text: "Dans quelle phrase « donner » signifie « offrir » ?", choices: ["Cette porte donne sur le jardin.", "Il donne son stylo à son ami.", "On donne une pièce de théâtre.", "Le soleil donne de la lumière."], correct: "Il donne son stylo à son ami." },
-    { id: "F12_2", competence: "F12", text: "Dans quelle phrase « donner » signifie « remettre » ?", choices: ["Il donne un coup de pied.", "La poule donne des œufs.", "Donne-moi ton téléphone.", "Le professeur donne une leçon."], correct: "Donne-moi ton téléphone." },
-    { id: "F12_3", competence: "F12", text: "Dans quelle phrase « donner » signifie « produire » ?", choices: ["Cette vache donne du lait.", "Il donne son avis.", "Donne ton adresse.", "On donne un concert."], correct: "Cette vache donne du lait." },
-    { id: "F12_4", competence: "F12", text: "Dans quelle phrase « donner » signifie « organiser » ?", choices: ["Donne-lui la main.", "Il donne son temps.", "La cloche donne l’heure.", "On donne une fête."], correct: "On donne une fête." },
-    { id: "F12_5", competence: "F12", text: "Dans quelle phrase « donner » signifie « présenter » ?", choices: ["Donne le livre à Paul.", "Le compteur donne 100 km/h.", "Donne ton nom.", "Il donne son discours."], correct: "Il donne son discours." },
-    // F13 - Expressions
-    { id: "F13_1", competence: "F13", text: "« Il a un chat dans la gorge » signifie :", choices: ["Il a du mal à parler", "Il a avalé un chat", "Il tousse", "Il a soif"], correct: "Il a du mal à parler" },
-    { id: "F13_2", competence: "F13", text: "« Elle est sur son nuage » signifie :", choices: ["Elle est dans le ciel", "Elle rêve", "Elle est fatiguée", "Elle est très heureuse"], correct: "Elle est très heureuse" },
-    { id: "F13_3", competence: "F13", text: "« Il est sur son trente-et-un » signifie :", choices: ["Il a 31 ans", "Il est en colère", "Il a 31 euros", "Il est très bien habillé"], correct: "Il est très bien habillé" },
-    { id: "F13_4", competence: "F13", text: "« Mets-toi le doigt dans l’œil » signifie :", choices: ["Tu te trompes", "Tu te blesses", "Tu regardes", "Tu te caches"], correct: "Tu te trompes" },
-    { id: "F13_5", competence: "F13", text: "« Il a la pêche » signifie :", choices: ["Il a un fruit", "Il est fatigué", "Il a envie de pêcher", "Il est en forme"], correct: "Il est en forme" },
-    // F14 - Champs lexicaux
-    { id: "F14_1", competence: "F14", text: "peur, angoisse, frayeur → thème :", choices: ["la joie", "la colère", "la tristesse", "la peur"], correct: "la peur" },
-    { id: "F14_2", competence: "F14", text: "rire, plaisir, bonheur → thème :", choices: ["la joie", "la peur", "le bruit", "le silence"], correct: "la joie" },
-    { id: "F14_3", competence: "F14", text: "tonnerre, explosion, murmure → thème :", choices: ["la lumière", "l’eau", "l’air", "le bruit"], correct: "le bruit" },
-    { id: "F14_4", competence: "F14", text: "rapide, vite, prompt → thème :", choices: ["la lenteur", "la force", "la faiblesse", "la rapidité"], correct: "la rapidité" },
-    { id: "F14_5", competence: "F14", text: "hier, autrefois, jadis → thème :", choices: ["l’avenir", "le présent", "le futur", "le passé"], correct: "le passé" },
-    // F15 - Synonyme succulent
-    { id: "F15_1", competence: "F15", text: "Un plat succulent est :", choices: ["fade", "amer", "brûlant", "délicieux"], correct: "délicieux" },
-    { id: "F15_2", competence: "F15", text: "Lequel est synonyme de succulent ?", choices: ["infect", "insipide", "froid", "exquis"], correct: "exquis" },
-    { id: "F15_3", competence: "F15", text: "Lequel est synonyme ?", choices: ["dégoûtant", "immangeable", "rassis", "savoureux"], correct: "savoureux" },
-    { id: "F15_4", competence: "F15", text: "Le contraire de succulent :", choices: ["détestable", "délectable", "appétissant", "goûteux"], correct: "détestable" },
-    { id: "F15_5", competence: "F15", text: "Lequel signifie « très bon » ?", choices: ["écœurant", "répugnant", "amer", "succulent"], correct: "succulent" }
+    // === Conjugaison : présent ===
+    { id: "CONJ_PRES_1", competence: "Conjugaison présent", text: "Conjuguez le verbe « chanter » au présent pour « elles ».", choices: ["chantent", "chantes", "chantons", "chantait"], correct: "chantent" },
+    { id: "CONJ_PRES_2", competence: "Conjugaison présent", text: "Conjuguez le verbe « finir » au présent pour « tu ».", choices: ["finis", "finit", "finissons", "finissait"], correct: "finis" },
+    { id: "CONJ_PRES_3", competence: "Conjugaison présent", text: "Conjuguez le verbe « prendre » au présent pour « je ».", choices: ["prends", "prenons", "prenez", "prenait"], correct: "prends" },
+    { id: "CONJ_PRES_4", competence: "Conjugaison présent", text: "Conjuguez le verbe « aller » au présent pour « il ».", choices: ["va", "vas", "allons", "allait"], correct: "va" },
+    { id: "CONJ_PRES_5", competence: "Conjugaison présent", text: "Conjuguez le verbe « faire » au présent pour « nous ».", choices: ["faisons", "faites", "font", "faisait"], correct: "faisons" },
+    // === Conjugaison : imparfait ===
+    { id: "CONJ_IMP_1", competence: "Conjugaison imparfait", text: "Conjuguez le verbe « aller » à l’imparfait pour « nous ».", choices: ["nous allions", "nous allons", "nous irons", "nous allâmes"], correct: "nous allions" },
+    { id: "CONJ_IMP_2", competence: "Conjugaison imparfait", text: "Conjuguez le verbe « finir » à l’imparfait pour « je ».", choices: ["je finis", "je finissais", "je finirai", "je finisais"], correct: "je finissais" },
+    { id: "CONJ_IMP_3", competence: "Conjugaison imparfait", text: "Conjuguez le verbe « prendre » à l’imparfait pour « ils ».", choices: ["ils prennent", "ils prenaient", "ils prendront", "ils prirent"], correct: "ils prenaient" },
+    { id: "CONJ_IMP_4", competence: "Conjugaison imparfait", text: "Conjuguez le verbe « être » à l’imparfait pour « tu ».", choices: ["tu es", "tu seras", "tu étais", "tu fus"], correct: "tu étais" },
+    { id: "CONJ_IMP_5", competence: "Conjugaison imparfait", text: "Conjuguez le verbe « avoir » à l’imparfait pour « elles ».", choices: ["elles ont", "elles auront", "elles avaient", "elles eurent"], correct: "elles avaient" },
+    // === Conjugaison : passé composé ===
+    { id: "CONJ_PC_1", competence: "Conjugaison passé composé", text: "Conjuguez le verbe « manger » au passé composé pour « j’ ».", choices: ["j’ai mangé", "je mange", "je mangerai", "je mangeais"], correct: "j’ai mangé" },
+    { id: "CONJ_PC_2", competence: "Conjugaison passé composé", text: "Conjuguez le verbe « partir » au passé composé pour « ils ».", choices: ["ils partent", "ils sont partis", "ils avaient parti", "ils partiront"], correct: "ils sont partis" },
+    { id: "CONJ_PC_3", competence: "Conjugaison passé composé", text: "Conjuguez le verbe « voir » au passé composé pour « nous ».", choices: ["nous voyons", "nous avons vu", "nous verrons", "nous voyions"], correct: "nous avons vu" },
+    { id: "CONJ_PC_4", competence: "Conjugaison passé composé", text: "Conjuguez le verbe « prendre » au passé composé pour « elle ».", choices: ["elle prend", "elle a pris", "elle prenait", "elle prendra"], correct: "elle a pris" },
+    { id: "CONJ_PC_5", competence: "Conjugaison passé composé", text: "Conjuguez le verbe « faire » au passé composé pour « vous ».", choices: ["vous faites", "vous avez fait", "vous ferez", "vous faisiez"], correct: "vous avez fait" },
+    // === Conjugaison : futur simple ===
+    { id: "CONJ_FUT_1", competence: "Conjugaison futur", text: "Conjuguez le verbe « chanter » au futur simple pour « je ».", choices: ["je chante", "je chantais", "je chanterai", "j’ai chanté"], correct: "je chanterai" },
+    { id: "CONJ_FUT_2", competence: "Conjugaison futur", text: "Conjuguez le verbe « finir » au futur pour « ils ».", choices: ["ils finissent", "ils finissaient", "ils finiront", "ils ont fini"], correct: "ils finiront" },
+    { id: "CONJ_FUT_3", competence: "Conjugaison futur", text: "Conjuguez le verbe « aller » au futur pour « nous ».", choices: ["nous allons", "nous allions", "nous irons", "nous sommes allés"], correct: "nous irons" },
+    { id: "CONJ_FUT_4", competence: "Conjugaison futur", text: "Conjuguez le verbe « être » au futur pour « tu ».", choices: ["tu es", "tu étais", "tu seras", "tu as été"], correct: "tu seras" },
+    { id: "CONJ_FUT_5", competence: "Conjugaison futur", text: "Conjuguez le verbe « avoir » au futur pour « elle ».", choices: ["elle a", "elle avait", "elle aura", "elle a eu"], correct: "elle aura" },
+    // === Grammaire : nature des mots ===
+    { id: "GRAM_NAT_1", competence: "Nature des mots", text: "Quelle est la nature du mot « rapidement » dans la phrase : « Il court rapidement » ?", choices: ["adjectif", "nom", "verbe", "adverbe"], correct: "adverbe" },
+    { id: "GRAM_NAT_2", competence: "Nature des mots", text: "Quelle est la nature du mot « beau » ?", choices: ["nom", "adjectif", "verbe", "préposition"], correct: "adjectif" },
+    { id: "GRAM_NAT_3", competence: "Nature des mots", text: "Quelle est la nature du mot « table » ?", choices: ["adjectif", "verbe", "nom", "adverbe"], correct: "nom" },
+    { id: "GRAM_NAT_4", competence: "Nature des mots", text: "Quelle est la nature du mot « avec » ?", choices: ["préposition", "conjonction", "adverbe", "nom"], correct: "préposition" },
+    { id: "GRAM_NAT_5", competence: "Nature des mots", text: "Quelle est la nature du mot « chanter » ?", choices: ["nom", "adjectif", "verbe", "adverbe"], correct: "verbe" },
+    // === Grammaire : fonctions (COD, COI, sujet, CC) ===
+    { id: "GRAM_FONC_1", competence: "Fonctions grammaticales", text: "Dans la phrase « Marie mange une pomme », quelle est la fonction du groupe « une pomme » ?", choices: ["sujet", "COD", "COI", "complément circonstanciel"], correct: "COD" },
+    { id: "GRAM_FONC_2", competence: "Fonctions grammaticales", text: "Dans la phrase « Paul parle à son ami », quelle est la fonction du groupe « à son ami » ?", choices: ["COD", "COI", "sujet", "attribut"], correct: "COI" },
+    { id: "GRAM_FONC_3", competence: "Fonctions grammaticales", text: "Dans la phrase « Le chien dort dans sa niche », quelle est la fonction du groupe « dans sa niche » ?", choices: ["COD", "COI", "sujet", "complément circonstanciel de lieu"], correct: "complément circonstanciel de lieu" },
+    { id: "GRAM_FONC_4", competence: "Fonctions grammaticales", text: "Dans la phrase « Les oiseaux chantent gaiement », quelle est la fonction du mot « gaiement » ?", choices: ["COD", "COI", "complément circonstanciel de manière", "attribut"], correct: "complément circonstanciel de manière" },
+    { id: "GRAM_FONC_5", competence: "Fonctions grammaticales", text: "Dans la phrase « Cette fleur est belle », quelle est la fonction du mot « belle » ?", choices: ["COD", "COI", "attribut du sujet", "complément circonstanciel"], correct: "attribut du sujet" },
+    // === Orthographe : accords ===
+    { id: "ORTH_ACC_1", competence: "Orthographe – accord sujet-verbe", text: "Complète la phrase : « Les poules ... dans la cour. » (picorer)", choices: ["picore", "picorent", "picorait", "picoreront"], correct: "picorent" },
+    { id: "ORTH_ACC_2", competence: "Orthographe – accord GN", text: "Complète la phrase : « Les fleurs sont ... . » (fané)", choices: ["fané", "fanée", "fanés", "fanées"], correct: "fanées" },
+    { id: "ORTH_ACC_3", competence: "Orthographe – accord sujet-verbe", text: "Complète : « Les enfants ... à l’école. » (aller)", choices: ["va", "vont", "allait", "iras"], correct: "vont" },
+    { id: "ORTH_ACC_4", competence: "Orthographe – accord GN", text: "Complète : « Des robes ... . » (rouge)", choices: ["rouge", "rouges", "rougeaud", "rougeâtres"], correct: "rouges" },
+    { id: "ORTH_ACC_5", competence: "Orthographe – accord sujet-verbe", text: "Complète : « Elle ... son vélo chaque jour. » (prendre)", choices: ["prenait", "prennent", "prend", "prendrons"], correct: "prend" },
+    // === Lexique : F1 (peine) ===
+    { id: "F1_1", competence: "F1 – Sens de « peine »", text: "Il a eu peine à terminer son dessin. Que signifie « peine » ici ?", choices: ["difficulté", "chagrin", "justesse", "joie"], correct: "difficulté" },
+    { id: "F1_2", competence: "F1 – Sens de « peine »", text: "La nouvelle lui a fait de la peine. Que signifie « peine » ?", choices: ["difficulté", "joie", "chagrin", "justesse"], correct: "chagrin" },
+    { id: "F1_3", competence: "F1 – Sens de « peine »", text: "J’ai à peine eu le temps de dire bonjour. Que signifie « à peine » ?", choices: ["chagrin", "difficulté", "joie", "justesse"], correct: "justesse" },
+    { id: "F1_4", competence: "F1 – Sens de « peine »", text: "Elle peine à soulever le cartable. Que signifie « peine » ?", choices: ["justesse", "difficulté", "chagrin", "joie"], correct: "difficulté" },
+    { id: "F1_5", competence: "F1 – Sens de « peine »", text: "Depuis son départ, il vit avec peine. Que signifie « peine » ici ?", choices: ["joie", "justesse", "difficulté", "chagrin"], correct: "chagrin" },
+    // === Lexique : F2 (émotions) ===
+    { id: "F2_1", competence: "F2 – Émotions", text: "Lequel n’est pas une émotion ?", choices: ["panique", "chaise", "joie", "tristesse"], correct: "chaise" },
+    { id: "F2_2", competence: "F2 – Émotions", text: "Lequel n’est pas une émotion ?", choices: ["table", "colère", "peur", "surprise"], correct: "table" },
+    { id: "F2_3", competence: "F2 – Émotions", text: "Lequel n’est pas une émotion ?", choices: ["angoisse", "vélo", "sérénité", "inquiétude"], correct: "vélo" },
+    { id: "F2_4", competence: "F2 – Émotions", text: "Lequel n’est pas une émotion ?", choices: ["crayon", "dégoût", "admiration", "fierté"], correct: "crayon" },
+    { id: "F2_5", competence: "F2 – Émotions", text: "Lequel n’est pas une émotion ?", choices: ["gêne", "ennui", "excitation", "porte"], correct: "porte" },
+    // === Lexique : F3 (famille main) ===
+    { id: "F3_1", competence: "F3 – Famille du mot main", text: "Trouve le mot de la même famille que « manuel », « manucure », « manuscrit ».", choices: ["main", "manoir", "manteau", "manger"], correct: "main" },
+    { id: "F3_2", competence: "F3 – Famille du mot main", text: "Trouve le mot de la même famille.", choices: ["manoir", "main", "malice", "mandat"], correct: "main" },
+    { id: "F3_3", competence: "F3 – Famille du mot main", text: "Trouve le mot de la même famille.", choices: ["manufacturier", "malin", "maman", "main"], correct: "main" },
+    { id: "F3_4", competence: "F3 – Famille du mot main", text: "Trouve le mot de la même famille.", choices: ["maintenir", "manuel", "maison", "main"], correct: "main" },
+    { id: "F3_5", competence: "F3 – Famille du mot main", text: "Trouve le mot de la même famille.", choices: ["manucure", "main", "mandarine", "manche"], correct: "main" },
+    // === Lexique : F4 (verbes précis) ===
+    { id: "F4_1", competence: "F4 – Remplacer « parle de »", text: "Remplace « parle de » dans : « Le documentaire parle de la pollution. »", choices: ["oublie", "évoque", "cache", "ignore"], correct: "évoque" },
+    { id: "F4_2", competence: "F4 – Remplacer « parle de »", text: "Remplace « parle de » dans : « L’auteur parle de son enfance. »", choices: ["supprime", "efface", "chante", "raconte"], correct: "raconte" },
+    { id: "F4_3", competence: "F4 – Remplacer « parle de »", text: "Remplace « parle de » dans : « Cet article parle de la guerre. »", choices: ["traite de", "fuit", "détruit", "salit"], correct: "traite de" },
+    { id: "F4_4", competence: "F4 – Remplacer « parle de »", text: "Remplace « parle de » dans : « Dans son discours, il parle de ses projets. »", choices: ["dissimule", "abîme", "expose", "refuse"], correct: "expose" },
+    { id: "F4_5", competence: "F4 – Remplacer « parle de »", text: "Remplace « parle de » dans : « Le poème parle de l’amour. »", choices: ["critique", "ignore", "déteste", "célèbre"], correct: "célèbre" },
+    // === Lexique : F5 (polysémie) ===
+    { id: "F5_1", competence: "F5 – Même mot", text: "Le suspect a été … en justice.", choices: ["convoqué", "jugé", "estimé", "puni"], correct: "jugé" },
+    { id: "F5_2", competence: "F5 – Même mot", text: "La … est tombée.", choices: ["lumière", "porte", "pluie", "fenêtre"], correct: "pluie" },
+    { id: "F5_3", competence: "F5 – Même mot", text: "Il a … une nouvelle idée.", choices: ["perdu", "acheté", "posé", "trouvé"], correct: "trouvé" },
+    { id: "F5_4", competence: "F5 – Même mot", text: "Le … du film est triste.", choices: ["milieu", "fin", "côté", "début"], correct: "début" },
+    { id: "F5_5", competence: "F5 – Même mot", text: "On a … la séance.", choices: ["fermé", "ouvert", "écrit", "levé"], correct: "levé" },
+    // === Lexique : F6 (noms en -eur) ===
+    { id: "F6_1", competence: "F6 – Noms en -eur", text: "Lequel est construit comme « chanteur » ?", choices: ["longueur", "danseur", "chaleur", "hauteur"], correct: "danseur" },
+    { id: "F6_2", competence: "F6 – Noms en -eur", text: "Lequel est construit comme « vendeur » ?", choices: ["grandeur", "peur", "bonheur", "mangeur"], correct: "mangeur" },
+    { id: "F6_3", competence: "F6 – Noms en -eur", text: "Lequel est construit comme « joueur » ?", choices: ["blancheur", "rougeur", "écureuil", "coureur"], correct: "coureur" },
+    { id: "F6_4", competence: "F6 – Noms en -eur", text: "Lequel est construit comme « nageur » ?", choices: ["hauteur", "sauteur", "pâtissier", "chaleur"], correct: "sauteur" },
+    { id: "F6_5", competence: "F6 – Noms en -eur", text: "Lequel est construit comme « liseur » ?", choices: ["travailleur", "hauteur", "longueur", "chaleur"], correct: "travailleur" },
+    // === Lexique : F7 (préfixe mal-) ===
+    { id: "F7_1", competence: "F7 – Préfixe mal-", text: "Trouve l’intrus (le mot qui n’a pas le sens négatif de mal-).", choices: ["malpropre", "maladroit", "malin", "malchanceux"], correct: "malin" },
+    { id: "F7_2", competence: "F7 – Préfixe mal-", text: "Trouve l’intrus.", choices: ["malbouffe", "malentendu", "mallette", "malveillant"], correct: "mallette" },
+    { id: "F7_3", competence: "F7 – Préfixe mal-", text: "Trouve l’intrus.", choices: ["malformation", "malédiction", "maladresse", "malice"], correct: "malice" },
+    { id: "F7_4", competence: "F7 – Préfixe mal-", text: "Trouve l’intrus.", choices: ["malhonnête", "malhabile", "malheureux", "malaxer"], correct: "malaxer" },
+    { id: "F7_5", competence: "F7 – Préfixe mal-", text: "Trouve l’intrus.", choices: ["malnutrition", "malpoli", "malin", "malsain"], correct: "malin" },
+    // === Lexique : F8 (chronique) ===
+    { id: "F8_1", competence: "F8 – Sens de « chronique »", text: "Une maladie chronique dure…", choices: ["peu", "jamais", "longtemps", "parfois"], correct: "longtemps" },
+    { id: "F8_2", competence: "F8 – Sens de « chronique »", text: "Un chômeur chronique est au chômage…", choices: ["depuis peu", "souvent", "jamais", "rarement"], correct: "souvent" },
+    { id: "F8_3", competence: "F8 – Sens de « chronique »", text: "Un retard chronique signifie…", choices: ["exceptionnel", "habituel", "inexistant", "unique"], correct: "habituel" },
+    { id: "F8_4", competence: "F8 – Sens de « chronique »", text: "Un menteur chronique ment…", choices: ["parfois", "jamais", "rarement", "toujours"], correct: "toujours" },
+    { id: "F8_5", competence: "F8 – Sens de « chronique »", text: "Une douleur chronique est…", choices: ["passagère", "imaginaire", "légère", "permanente"], correct: "permanente" },
+    // === Lexique : F11 (suffixes) ===
+    { id: "F11_1", competence: "F11 – Suffixes", text: "« Lavable » signifie :", choices: ["qui lave", "lavé", "qui se lave", "que l’on peut laver"], correct: "que l’on peut laver" },
+    { id: "F11_2", competence: "F11 – Suffixes", text: "« Lisible » signifie :", choices: ["qui lit", "lu", "que l’on peut lire", "qui se lit"], correct: "que l’on peut lire" },
+    { id: "F11_3", competence: "F11 – Suffixes", text: "« Peureux » signifie :", choices: ["qui a peur", "qui fait peur", "qui est peur", "peur"], correct: "qui a peur" },
+    { id: "F11_4", competence: "F11 – Suffixes", text: "« Nettoyage » désigne :", choices: ["le résultat", "l’outil", "la personne", "l’action de nettoyer"], correct: "l’action de nettoyer" },
+    { id: "F11_5", competence: "F11 – Suffixes", text: "« Émotion » vient du verbe :", choices: ["émotif", "moteur", "motion", "émouvoir"], correct: "émouvoir" },
+    // === Lexique : F12 (donner) ===
+    { id: "F12_1", competence: "F12 – Sens de « donner »", text: "Dans quelle phrase « donner » signifie « offrir » ?", choices: ["Cette porte donne sur le jardin.", "Il donne son stylo à son ami.", "On donne une pièce de théâtre.", "Le soleil donne de la lumière."], correct: "Il donne son stylo à son ami." },
+    { id: "F12_2", competence: "F12 – Sens de « donner »", text: "Dans quelle phrase « donner » signifie « remettre » ?", choices: ["Il donne un coup de pied.", "La poule donne des œufs.", "Donne-moi ton téléphone.", "Le professeur donne une leçon."], correct: "Donne-moi ton téléphone." },
+    { id: "F12_3", competence: "F12 – Sens de « donner »", text: "Dans quelle phrase « donner » signifie « produire » ?", choices: ["Cette vache donne du lait.", "Il donne son avis.", "Donne ton adresse.", "On donne un concert."], correct: "Cette vache donne du lait." },
+    { id: "F12_4", competence: "F12 – Sens de « donner »", text: "Dans quelle phrase « donner » signifie « organiser » ?", choices: ["Donne-lui la main.", "Il donne son temps.", "La cloche donne l’heure.", "On donne une fête."], correct: "On donne une fête." },
+    { id: "F12_5", competence: "F12 – Sens de « donner »", text: "Dans quelle phrase « donner » signifie « présenter » ?", choices: ["Donne le livre à Paul.", "Le compteur donne 100 km/h.", "Donne ton nom.", "Il donne son discours."], correct: "Il donne son discours." },
+    // === Lexique : F13 (expressions) ===
+    { id: "F13_1", competence: "F13 – Expressions", text: "« Il a un chat dans la gorge » signifie :", choices: ["Il a du mal à parler", "Il a avalé un chat", "Il tousse", "Il a soif"], correct: "Il a du mal à parler" },
+    { id: "F13_2", competence: "F13 – Expressions", text: "« Elle est sur son nuage » signifie :", choices: ["Elle est dans le ciel", "Elle rêve", "Elle est fatiguée", "Elle est très heureuse"], correct: "Elle est très heureuse" },
+    { id: "F13_3", competence: "F13 – Expressions", text: "« Il est sur son trente-et-un » signifie :", choices: ["Il a 31 ans", "Il est en colère", "Il a 31 euros", "Il est très bien habillé"], correct: "Il est très bien habillé" },
+    { id: "F13_4", competence: "F13 – Expressions", text: "« Mets-toi le doigt dans l’œil » signifie :", choices: ["Tu te trompes", "Tu te blesses", "Tu regardes", "Tu te caches"], correct: "Tu te trompes" },
+    { id: "F13_5", competence: "F13 – Expressions", text: "« Il a la pêche » signifie :", choices: ["Il a un fruit", "Il est fatigué", "Il a envie de pêcher", "Il est en forme"], correct: "Il est en forme" },
+    // === Lexique : F14 (champ lexical) ===
+    { id: "F14_1", competence: "F14 – Champ lexical", text: "tremblement, angoisse, frayeur → thème :", choices: ["la joie", "la colère", "la tristesse", "la peur"], correct: "la peur" },
+    { id: "F14_2", competence: "F14 – Champ lexical", text: "rire, plaisir, bonheur → thème :", choices: ["la joie", "la peur", "le bruit", "le silence"], correct: "la joie" },
+    { id: "F14_3", competence: "F14 – Champ lexical", text: "tonnerre, explosion, murmure → thème :", choices: ["la lumière", "l’eau", "l’air", "le bruit"], correct: "le bruit" },
+    { id: "F14_4", competence: "F14 – Champ lexical", text: "rapide, vite, prompt → thème :", choices: ["la lenteur", "la force", "la faiblesse", "la rapidité"], correct: "la rapidité" },
+    { id: "F14_5", competence: "F14 – Champ lexical", text: "hier, autrefois, jadis → thème :", choices: ["l’avenir", "le présent", "le futur", "le passé"], correct: "le passé" },
+    // === Lexique : F15 (synonyme succulent) ===
+    { id: "F15_1", competence: "F15 – Synonymes", text: "Un plat succulent est :", choices: ["fade", "amer", "brûlant", "délicieux"], correct: "délicieux" },
+    { id: "F15_2", competence: "F15 – Synonymes", text: "Lequel est synonyme de succulent ?", choices: ["infect", "insipide", "froid", "exquis"], correct: "exquis" },
+    { id: "F15_3", competence: "F15 – Synonymes", text: "Lequel est synonyme ?", choices: ["dégoûtant", "immangeable", "rassis", "savoureux"], correct: "savoureux" },
+    { id: "F15_4", competence: "F15 – Synonymes", text: "Le contraire de succulent :", choices: ["détestable", "délectable", "appétissant", "goûteux"], correct: "détestable" },
+    { id: "F15_5", competence: "F15 – Synonymes", text: "Lequel signifie « très bon » ?", choices: ["écœurant", "répugnant", "amer", "succulent"], correct: "succulent" }
   ];
 
   // --------------------------------------------------------------
   // État
-  let currentIndex = 0;          // index dans le tableau exercises
-  let sessionAnswers = [];       // stocke { id, correct } pour la session courante
+  let currentIndex = 0;
+  let sessionAnswers = [];
   let prenom = "";
 
-  // Éléments DOM
+  // DOM
   const prenomSelect = document.getElementById('prenomSelect');
   const compBadge = document.getElementById('compBadge');
   const questionText = document.getElementById('questionText');
@@ -350,23 +381,17 @@
   const progressFill = document.getElementById('progressFill');
   const sessionCounterSpan = document.getElementById('sessionCounter');
 
-  // --------------------------------------------------------------
-  // Charger la progression depuis localStorage
   function loadProgress() {
     const savedIndex = localStorage.getItem('fr_currentIndex');
     if (savedIndex !== null && !isNaN(parseInt(savedIndex))) {
       currentIndex = parseInt(savedIndex);
       if (currentIndex >= exercises.length) currentIndex = exercises.length - 1;
       if (currentIndex < 0) currentIndex = 0;
-    } else {
-      currentIndex = 0;
-    }
+    } else currentIndex = 0;
     const savedAnswers = localStorage.getItem('fr_sessionAnswers');
     if (savedAnswers) {
       try { sessionAnswers = JSON.parse(savedAnswers); } catch(e) { sessionAnswers = []; }
-    } else {
-      sessionAnswers = [];
-    }
+    } else sessionAnswers = [];
     updateProgressDisplay();
   }
 
@@ -383,17 +408,14 @@
     sessionCounterSpan.innerText = `Exercice ${answered} / ${total}`;
   }
 
-  // --------------------------------------------------------------
-  // Afficher l'exercice courant
   function displayExercise() {
     const ex = exercises[currentIndex];
     if (!ex) return;
     compBadge.innerText = ex.competence;
     questionText.innerText = ex.text;
-    // Générer les choix (boutons radio)
     let html = '';
     ex.choices.forEach((choice, idx) => {
-      const letter = String.fromCharCode(65+idx); // A,B,C,D
+      const letter = String.fromCharCode(65+idx);
       html += `
         <label class="choice">
           <input type="radio" name="choice" value="${escapeHtml(choice)}">
@@ -404,12 +426,10 @@
     choicesContainer.innerHTML = html;
     feedbackDiv.className = 'feedback';
     feedbackDiv.style.display = 'none';
-    // Décocher tous les radios
     const radios = document.querySelectorAll('input[name="choice"]');
     radios.forEach(r => r.checked = false);
   }
 
-  // simple échappement
   function escapeHtml(str) {
     return str.replace(/[&<>]/g, function(m) {
       if (m === '&') return '&amp;';
@@ -419,8 +439,6 @@
     });
   }
 
-  // --------------------------------------------------------------
-  // Envoyer la réponse au Google Sheet
   async function sendToSheet(prenom, matiere, competence, exerciceId, reponse, correct, tempsMs = 0) {
     if (!prenom) return;
     try {
@@ -442,7 +460,6 @@
     } catch(e) { console.warn("Erreur envoi sheet", e); }
   }
 
-  // Vérifier la réponse
   async function checkAnswer() {
     const selectedRadio = document.querySelector('input[name="choice"]:checked');
     if (!selectedRadio) {
@@ -454,28 +471,22 @@
     const userAnswer = selectedRadio.value;
     const ex = exercises[currentIndex];
     const isCorrect = (userAnswer === ex.correct);
-    // Enregistrer localement
     sessionAnswers.push({ id: ex.id, correct: isCorrect, answer: userAnswer });
     saveProgress();
     updateProgressDisplay();
 
-    // Afficher feedback
     feedbackDiv.innerText = isCorrect ? "✔️ Bonne réponse !" : `❌ Mauvaise réponse. La bonne réponse était : ${ex.correct}`;
     feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
     feedbackDiv.style.display = 'block';
 
-    // Envoyer au Sheet
     await sendToSheet(prenom, "francais", ex.competence, ex.id, userAnswer, isCorrect, 0);
 
-    // Passer à l'exercice suivant après 1s
     setTimeout(() => {
       if (currentIndex + 1 < exercises.length) {
         currentIndex++;
         displayExercise();
-        // défilement fluide
         document.getElementById('exerciseCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
-        // Fin du parcours
         feedbackDiv.innerText = "🎉 Félicitations ! Tu as terminé tous les exercices de français. Retourne à l'accueil ou continue en maths.";
         feedbackDiv.className = 'feedback correct';
         feedbackDiv.style.display = 'block';
@@ -486,7 +497,6 @@
     }, 1000);
   }
 
-  // Passer (sans enregistrer la réponse, mais on passe à l'exercice suivant)
   function skipExercise() {
     if (currentIndex + 1 < exercises.length) {
       currentIndex++;
@@ -500,16 +510,12 @@
     }
   }
 
-  // --------------------------------------------------------------
-  // Gestion prénom
   function initPrenom() {
     const saved = localStorage.getItem('elevePrenom');
     if (saved && prenomSelect.querySelector(`option[value="${saved}"]`)) {
       prenomSelect.value = saved;
       prenom = saved;
-    } else {
-      prenom = "";
-    }
+    } else prenom = "";
     prenomSelect.addEventListener('change', () => {
       prenom = prenomSelect.value;
       if (prenom) localStorage.setItem('elevePrenom', prenom);
@@ -517,8 +523,6 @@
     });
   }
 
-  // --------------------------------------------------------------
-  // Démarrage
   function init() {
     initPrenom();
     loadProgress();

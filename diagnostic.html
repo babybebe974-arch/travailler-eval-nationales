@@ -6,7 +6,6 @@
   <title>Diagnostic — Travailler évaluations nationales</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* (même style que précédemment, inchangé) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #09090f;
@@ -237,52 +236,57 @@
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXtYaj1izgW7vHXlINk7vl1eVj_vTnV9Gq4TRShSJDlwKbnHwScwUzOW5PwDn_mLfk/exec";
 
   // --------------------------------------------------------------
-  // BANQUE D'EXERCICES FRANÇAIS (conjugaison, grammaire, lexique, orthographe)
+  // BANQUE D'EXERCICES FRANÇAIS (15 items, basés sur les compétences les plus faibles en REP+)
   const frenchExercises = [
-    // Conjugaison (imparfait)
-    { id: "CONJ1", competence: "Conjugaison", matiere: "francais", text: "Conjuguez le verbe « aller » à l’imparfait pour « nous ».", choices: ["nous allons", "nous allions", "nous irons", "nous allâmes"], correct: "nous allions" },
-    // Grammaire - nature des mots
-    { id: "GRAM1", competence: "Grammaire", matiere: "francais", text: "Quelle est la nature du mot « rapidement » ?", choices: ["adjectif", "nom", "verbe", "adverbe"], correct: "adverbe" },
-    // Fonction - COD
-    { id: "FONC1", competence: "Grammaire", matiere: "francais", text: "Dans « Marie mange une pomme », fonction de « une pomme » ?", choices: ["sujet", "COD", "COI", "complément circonstanciel"], correct: "COD" },
-    // Orthographe – accord sujet-verbe
-    { id: "ORTH1", competence: "Orthographe", matiere: "francais", text: "Complète : « Les poules ... dans la cour. » (picorer)", choices: ["picore", "picorent", "picorait", "picoreront"], correct: "picorent" },
-    { id: "ORTH2", competence: "Orthographe", matiere: "francais", text: "Complète : « Les fleurs ... fanées. » (adjectif)", choices: ["fané", "fanée", "fanés", "fanées"], correct: "fanées" },
-    // 13 compétences lexique (F1 à F8, F11 à F15, on supprime F9 et F10)
-    { id: "F1_2", competence: "F1", matiere: "francais", text: "La nouvelle lui a fait de la peine.", choices: ["difficulté", "joie", "chagrin", "justesse"], correct: "chagrin" },
-    { id: "F2_1", competence: "F2", matiere: "francais", text: "Lequel n’est pas une émotion ?", choices: ["panique", "chaise", "joie", "tristesse"], correct: "chaise" },
-    { id: "F3_1", competence: "F3", matiere: "francais", text: "Mot de la même famille que manuel, manucure ?", choices: ["main", "manoir", "manteau", "manger"], correct: "main" },
-    { id: "F4_1", competence: "F4", matiere: "francais", text: "Remplace « parle de » : Le documentaire ... la pollution.", choices: ["oublie", "évoque", "cache", "ignore"], correct: "évoque" },
-    { id: "F5_1", competence: "F5", matiere: "francais", text: "Le suspect a été … en justice.", choices: ["convoqué", "jugé", "estimé", "puni"], correct: "jugé" },
-    { id: "F6_1", competence: "F6", matiere: "francais", text: "Construit comme « chanteur » ?", choices: ["longueur", "danseur", "chaleur", "hauteur"], correct: "danseur" },
-    { id: "F7_1", competence: "F7", matiere: "francais", text: "Intrus (pas le sens de mal-) ?", choices: ["malpropre", "maladroit", "malin", "malchanceux"], correct: "malin" },
-    { id: "F8_1", competence: "F8", matiere: "francais", text: "Une maladie chronique dure...", choices: ["peu", "jamais", "longtemps", "parfois"], correct: "longtemps" },
-    { id: "F11_1", competence: "F11", matiere: "francais", text: "« Lavable » signifie :", choices: ["qui lave", "lavé", "qui se lave", "que l’on peut laver"], correct: "que l’on peut laver" },
-    { id: "F12_1", competence: "F12", matiere: "francais", text: "« Donner » = offrir ?", choices: ["Cette porte donne sur le jardin.", "Il donne son stylo.", "On donne une pièce.", "Le soleil donne de la lumière."], correct: "Il donne son stylo." },
-    { id: "F13_1", competence: "F13", matiere: "francais", text: "« Avoir un chat dans la gorge » signifie :", choices: ["Avoir du mal à parler", "Avaler un chat", "Tousser", "Avoir soif"], correct: "Avoir du mal à parler" },
-    { id: "F14_1", competence: "F14", matiere: "francais", text: "tremblement, angoisse, frayeur → thème :", choices: ["joie", "colère", "tristesse", "peur"], correct: "peur" },
-    { id: "F15_1", competence: "F15", matiere: "francais", text: "Synonyme de succulent ?", choices: ["fade", "amer", "brûlant", "délicieux"], correct: "délicieux" }
+    // Lexique – Q11 (peine)
+    { id: "F_Q11", competence: "Lexique", matiere: "francais", text: "Dans « Il éprouve de la peine à parler », que signifie « peine » ?", choices: ["difficulté", "chagrin", "justesse", "joie"], correct: "difficulté" },
+    // Lexique – Q14 (émotion)
+    { id: "F_Q14", competence: "Lexique", matiere: "francais", text: "Quel mot n’est pas lié à une émotion ?", choices: ["inquiétude", "angoissse", "rumeur", "frissonnante"], correct: "rumeur" },
+    // Lexique – Q4 (famille main)
+    { id: "F_Q4", competence: "Lexique", matiere: "francais", text: "Lequel est de la même famille que « manuel », « manucure », « manuscrit » ?", choices: ["manoir", "maître", "main", "maigre"], correct: "main" },
+    // Lexique – Q15 (remplacer parle de)
+    { id: "F_Q15", competence: "Lexique", matiere: "francais", text: "Remplace « parle de » dans : « Le texte parle de l’enfance de l’auteur. »", choices: ["se souvient de", "s’agit de", "évoque", "exploite"], correct: "évoque" },
+    // Lexique – Q10 (même mot)
+    { id: "F_Q10", competence: "Lexique", matiere: "francais", text: "Complète les deux phrases par le même mot : « Marie n’a pas … nécessaire de nous prévenir. » / « Le délinquant va être … en comparution immédiate. »", choices: ["jugé", "convoqué", "estimé", "pensé"], correct: "jugé" },
+    // Lexique – Q3 (suffixe -eur)
+    { id: "F_Q3", competence: "Lexique", matiere: "francais", text: "Lequel est formé comme « vendeur » (verbe + -eur) ?", choices: ["malheur", "chaleur", "joueur", "longueur"], correct: "joueur" },
+    // Lexique – Q1 (préfixe mal-)
+    { id: "F_Q1", competence: "Lexique", matiere: "francais", text: "Trouve l’intrus (pas le sens négatif de mal-) :", choices: ["malade", "malhabile", "malheureux", "malchanceux"], correct: "malade" },
+    // Orthographe – accord sujet-verbe (sujet éloigné)
+    { id: "F_ORTH1", competence: "Orthographe", matiere: "francais", text: "Complète : « Les odeurs qui viennent de la cuisine … délicieuses. » (être)", choices: ["est", "sont", "était", "sera"], correct: "sont" },
+    // Orthographe – accord GN (pluriel)
+    { id: "F_ORTH2", competence: "Orthographe", matiere: "francais", text: "Complète : « Des tables … et propres. » (blanc)", choices: ["blanc", "blanche", "blanches", "blancs"], correct: "blanches" },
+    // Grammaire – nature des mots (adverbe)
+    { id: "F_GRAM1", competence: "Grammaire", matiere: "francais", text: "Quelle est la nature du mot « rapidement » ?", choices: ["adjectif", "nom", "verbe", "adverbe"], correct: "adverbe" },
+    // Grammaire – fonction COD
+    { id: "F_GRAM2", competence: "Grammaire", matiere: "francais", text: "Dans « Paul mange une pomme », quelle est la fonction de « une pomme » ?", choices: ["sujet", "COD", "COI", "complément circonstanciel"], correct: "COD" },
+    // Grammaire – fonction COI
+    { id: "F_GRAM3", competence: "Grammaire", matiere: "francais", text: "Dans « Il parle à son ami », fonction de « à son ami » ?", choices: ["COD", "COI", "sujet", "attribut"], correct: "COI" },
+    // Conjugaison – imparfait (3e groupe)
+    { id: "F_CONJ1", competence: "Conjugaison", matiere: "francais", text: "Conjuguez « aller » à l’imparfait pour « nous ».", choices: ["nous allons", "nous allions", "nous irons", "nous allâmes"], correct: "nous allions" },
+    // Conjugaison – passé composé (verbe irrégulier)
+    { id: "F_CONJ2", competence: "Conjugaison", matiere: "francais", text: "Conjuguez « prendre » au passé composé pour « ils ».", choices: ["ils prennent", "ils ont pris", "ils avaient pris", "ils prendront"], correct: "ils ont pris" },
+    // Conjugaison – présent (verbe du 3e groupe)
+    { id: "F_CONJ3", competence: "Conjugaison", matiere: "francais", text: "Conjuguez « finir » au présent pour « tu ».", choices: ["tu finis", "tu finit", "tu finissais", "tu finiras"], correct: "tu finis" }
   ];
 
-  // BANQUE EXERCICES MATHÉMATIQUES (problèmes simples + problèmes complexes)
+  // BANQUE EXERCICES MATHÉMATIQUES (15 items variés, dont problèmes complexes)
   const mathExercises = [
-    // Problème simple à une opération
-    { id: "M1_1", competence: "M1", matiere: "maths", text: "36 objets pèsent 1,8 kg. Masse d’un objet ?", choices: ["0,5 kg", "50 g", "5 g", "0,05 kg"], correct: "50 g" },
-    { id: "M3_1", competence: "M3", matiere: "maths", text: "Périmètre = 240 cm, largeur = 30 cm. Longueur ?", choices: ["60 cm", "90 cm", "120 cm", "180 cm"], correct: "90 cm" },
-    { id: "M4_1", competence: "M4", matiere: "maths", text: "5 paquets coûtent 7,50 €. Prix de 3 paquets ?", choices: ["3 €", "4 €", "4,50 €", "5 €"], correct: "4,50 €" },
-    { id: "M5_1", competence: "M5", matiere: "maths", text: "Rectangle 6 carreaux sur 4 (1 cm/carreau). Périmètre ?", choices: ["20 cm", "24 cm", "18 cm", "22 cm"], correct: "20 cm" },
-    { id: "M6_1", competence: "M6", matiere: "maths", text: "6,3 × 4 = ?", choices: ["24,2", "25,2", "25,6", "26,2"], correct: "25,2" },
-    { id: "M7_1", competence: "M7", matiere: "maths", text: "3 stylos à 1,80 €, donne 10 €. Rendue ?", choices: ["4,60 €", "4,20 €", "5,40 €", "6,20 €"], correct: "4,60 €" },
-    { id: "M8_1", competence: "M8", matiere: "maths", text: "3 t‑shirts et 5 casquettes : nombre de tenues ?", choices: ["8", "15", "12", "20"], correct: "15" },
-    { id: "M9_1", competence: "M9", matiere: "maths", text: "Début 9h45, durée 35 min → fin ?", choices: ["10h10", "10h20", "10h30", "10h00"], correct: "10h20" },
-    { id: "M10_1", competence: "M10", matiere: "maths", text: "5 pers., 6 j, 25 €/j → total ?", choices: ["500 €", "750 €", "600 €", "900 €"], correct: "750 €" },
-    { id: "M11_1", competence: "M11", matiere: "maths", text: "56 bonbons, donne 9 par enfant, reste 2. Enfants ?", choices: ["5", "6", "7", "8"], correct: "6" },
-    { id: "M13_1", competence: "M13", matiere: "maths", text: "Douche 50 L, bain 180 L. Économie sur 5 j ?", choices: ["650 L", "700 L", "750 L", "900 L"], correct: "650 L" },
-    { id: "M14_1", competence: "M14", matiere: "maths", text: "Moitié de 12,6 ?", choices: ["6,2", "6,3", "6,4", "6,1"], correct: "6,3" },
-    { id: "M15_1", competence: "M15", matiere: "maths", text: "Nombre + 7 = moitié de 200. Nombre ?", choices: ["93", "97", "103", "107"], correct: "93" },
-    // Problèmes complexes (2 opérations)
-    { id: "CMP1", competence: "Problèmes complexes", matiere: "maths", text: "Un lot de 3 cahiers coûte 12 €. J’achète 6 cahiers et je paie avec un billet de 50 €. Combien me rend‑on ?", choices: ["26 €", "24 €", "14 €", "38 €"], correct: "26 €" },
-    { id: "CMP2", competence: "Problèmes complexes", matiere: "maths", text: "Dans une classe de 25 élèves, chaque élève donne 2 € pour un projet. La maîtresse ajoute 15 €. Combien d’argent ont‑ils au total ?", choices: ["50 €", "65 €", "40 €", "55 €"], correct: "65 €" }
+    { id: "M_MASSE", competence: "Masse unitaire", matiere: "maths", text: "36 objets identiques pèsent 1,8 kg. Quelle est la masse d’un objet ?", choices: ["0,5 kg", "50 g", "5 g", "0,05 kg"], correct: "50 g" },
+    { id: "M_PROP", competence: "Proportionnalité", matiere: "maths", text: "5 paquets de gâteaux coûtent 7,50 €. Combien coûtent 3 paquets ?", choices: ["3 €", "4 €", "4,50 €", "5 €"], correct: "4,50 €" },
+    { id: "M_PERIM", competence: "Périmètre", matiere: "maths", text: "Un rectangle a un périmètre de 240 cm et une largeur de 30 cm. Quelle est sa longueur ?", choices: ["60 cm", "90 cm", "120 cm", "180 cm"], correct: "90 cm" },
+    { id: "M_QUADRI", competence: "Périmètre quadrillage", matiere: "maths", text: "Un rectangle mesure 6 carreaux sur 4 (1 carreau = 1 cm). Quel est son périmètre ?", choices: ["20 cm", "24 cm", "18 cm", "22 cm"], correct: "20 cm" },
+    { id: "M_MULT", competence: "Multiplication décimale", matiere: "maths", text: "Calcule : 6,3 × 4 = ?", choices: ["24,2", "25,2", "25,6", "26,2"], correct: "25,2" },
+    { id: "M_MONNAIE", competence: "Monnaie rendue", matiere: "maths", text: "Tu achètes 3 stylos à 1,80 € l’un et tu donnes 10 €. Combien te rend-on ?", choices: ["4,60 €", "4,20 €", "5,40 €", "6,20 €"], correct: "4,60 €" },
+    { id: "M_COMBINAISON", competence: "Combinaisons", matiere: "maths", text: "Avec 3 t‑shirts et 5 casquettes, combien de tenues différentes ?", choices: ["8", "15", "12", "20"], correct: "15" },
+    { id: "M_DUREE", competence: "Calcul de durée", matiere: "maths", text: "Une activité commence à 9h45 et dure 35 minutes. À quelle heure se termine-t-elle ?", choices: ["10h10", "10h20", "10h30", "10h00"], correct: "10h20" },
+    { id: "M_COUT", competence: "Coût total", matiere: "maths", text: "5 personnes, 6 jours, 25 € par jour et par personne. Coût total ?", choices: ["500 €", "750 €", "600 €", "900 €"], correct: "750 €" },
+    { id: "M_PARTAGE", competence: "Partage avec reste", matiere: "maths", text: "56 bonbons, on donne 9 à chaque enfant, il reste 2. Combien d’enfants ?", choices: ["5", "6", "7", "8"], correct: "6" },
+    { id: "M_OPERATION", competence: "Opération litres", matiere: "maths", text: "9 bouteilles de 0,75 L : quelle opération donne le volume total ?", choices: ["9 + 0,75", "9 × 0,75 + prix", "9 × 0,75", "9 + 0,75 + prix"], correct: "9 × 0,75" },
+    { id: "M_ECONOMIE", competence: "Économie d’eau", matiere: "maths", text: "Douche 50 L, bain 180 L. Économie sur 5 jours ?", choices: ["650 L", "700 L", "750 L", "900 L"], correct: "650 L" },
+    { id: "M_MOITIE", competence: "Moitié d’un décimal", matiere: "maths", text: "Quelle est la moitié de 12,6 ?", choices: ["6,2", "6,3", "6,4", "6,1"], correct: "6,3" },
+    { id: "M_EQUATION", competence: "Équation simple", matiere: "maths", text: "Nombre + 7 = moitié de 200. Quel est ce nombre ?", choices: ["93", "97", "103", "107"], correct: "93" },
+    { id: "M_COMPLEXE", competence: "Problème complexe", matiere: "maths", text: "Un lot de 3 cahiers coûte 12 €. J’achète 6 cahiers et je paie avec un billet de 50 €. Combien me rend‑on ?", choices: ["26 €", "24 €", "14 €", "38 €"], correct: "26 €" }
   ];
 
   // Mélanger et sélectionner 15 français + 15 maths
@@ -302,7 +306,7 @@
   ];
   const finalExercises = shuffleArray(diagnosticExercises);
 
-  // État et fonctions (inchangés)
+  // État
   let currentIndex = 0;
   let sessionAnswers = [];
   let prenom = "";
@@ -423,7 +427,7 @@
         displayExercise();
         document.getElementById('diagnosticCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
-        feedbackDiv.innerText = "🎉 Diagnostic terminé ! Tes résultats ont été envoyés à l’enseignant.";
+        feedbackDiv.innerText = "🎉 Diagnostic terminé ! Tes résultats ont été envoyés à l’enseignant. Retourne à l’accueil pour continuer ton entraînement.";
         feedbackDiv.className = 'feedback correct';
         feedbackDiv.style.display = 'block';
         validateBtn.disabled = true;
