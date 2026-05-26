@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Évaluation finale — français | Travailler évaluations nationales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #09090f;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .header {
+      background: #111118;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    .logo span { color: #e8c87a; }
+    .student-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #09090f;
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .student-area label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: #f07a5a;
+    }
+    select {
+      background: #1e1e2a;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+    .progress-bar {
+      background: #1e1e2a;
+      border-radius: 60px;
+      height: 8px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .progress-fill {
+      background: #f07a5a;
+      width: 0%;
+      height: 8px;
+      border-radius: 60px;
+      transition: width 0.2s;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(240,237,232,0.5);
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 28px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .competence-badge {
+      display: inline-block;
+      background: rgba(240,122,90,0.15);
+      border: 1px solid rgba(240,122,90,0.3);
+      border-radius: 60px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-family: 'DM Mono', monospace;
+      color: #f07a5a;
+      margin-bottom: 1rem;
+    }
+    .question {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: #1a1a24;
+      padding: 0.7rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .choice:hover {
+      background: #262632;
+    }
+    input[type="radio"] {
+      accent-color: #f07a5a;
+      width: 18px;
+      height: 18px;
+    }
+    .choice-label {
+      font-size: 1rem;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      background: rgba(240,122,90,0.1);
+      border: 1px solid rgba(240,122,90,0.4);
+      color: #f07a5a;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    button:hover {
+      background: rgba(240,122,90,0.25);
+    }
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .feedback.correct {
+      background: rgba(126,207,138,0.15);
+      border: 1px solid #7ecf8a;
+      color: #7ecf8a;
+      display: block;
+    }
+    .feedback.incorrect {
+      background: rgba(245,90,90,0.15);
+      border: 1px solid #f55a5a;
+      color: #f55a5a;
+      display: block;
+    }
+    .btn-secondary {
+      background: transparent;
+      border-color: rgba(255,255,255,0.2);
+      color: rgba(240,237,232,0.7);
+    }
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.7rem;
+      color: rgba(240,237,232,0.3);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 2rem;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem; }
+      .card { padding: 1.2rem; }
+      .question { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">Travailler <span>évaluations nationales</span></div>
+  <div class="student-area">
+    <label>👤 Élève</label>
+    <select id="prenomSelect">
+      <option value="">-- Sélectionne --</option>
+      <option value="Raphael">Raphael</option><option value="Heidi">Heidi</option><option value="Alice">Alice</option>
+      <option value="Norah">Norah</option><option value="Adèle">Adèle</option><option value="Kim">Kim</option>
+      <option value="Sheurley">Sheurley</option><option value="Iris">Iris</option><option value="Luc">Luc</option>
+      <option value="Trecy">Trecy</option><option value="Loris">Loris</option><option value="Léna">Léna</option>
+      <option value="Amandine">Amandine</option><option value="Ethan">Ethan</option><option value="Andryana">Andryana</option>
+      <option value="Kaysia">Kaysia</option><option value="Camila">Camila</option><option value="Cassie">Cassie</option>
+      <option value="Adriel">Adriel</option><option value="Testeur">Testeur</option>
+    </select>
+  </div>
+</div>
+
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="stats">
+    <span>⭐ Évaluation finale — français</span>
+    <span id="sessionCounter">Question 0 / 15</span>
+  </div>
+
+  <div class="card" id="evalCard">
+    <div><span class="competence-badge" id="compBadge">F1</span></div>
+    <div class="question" id="questionText"></div>
+    <div class="choices" id="choicesContainer"></div>
+    <div class="actions">
+      <button id="validateBtn" class="btn-primary">✓ Valider</button>
+      <button id="skipBtn" class="btn-secondary">⏩ Passer (sans enregistrer)</button>
+    </div>
+    <div id="feedback" class="feedback"></div>
+  </div>
+</div>
+<div class="footer">
+  <p>Évaluation finale — un exercice par compétence. Envoi des résultats à l’enseignant.</p>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // URL du script Google Apps Script (identique)
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXtYaj1izgW7vHXlINk7vl1eVj_vTnV9Gq4TRShSJDlwKbnHwScwUzOW5PwDn_mLfk/exec";
+
+  // --------------------------------------------------------------
+  // BANQUE D'EXERCICES (15 questions, une par compétence)
+  const exercises = [
+    { id: "FIN_F1", competence: "F1", text: "Après l’accident, il a eu beaucoup de peine à remarcher.", choices: ["difficulté", "chagrin", "justesse", "colère"], correct: "difficulté" },
+    { id: "FIN_F2", competence: "F2", text: "Ses mains tremblaient et son cœur battait très fort avant l’examen. Quelle émotion ?", choices: ["colère", "inquiétude", "joie", "surprise"], correct: "inquiétude" },
+    { id: "FIN_F3", competence: "F3", text: "Lequel est de la même famille que « main » ?", choices: ["manipuler", "manger", "manteau", "maison"], correct: "manipuler" },
+    { id: "FIN_F4", competence: "F4", text: "Ce reportage parle de la fonte des glaces. Remplace « parle de » par un verbe plus précis.", choices: ["décrit", "ignore", "cache", "chante"], correct: "décrit" },
+    { id: "FIN_F5", competence: "F5", text: "Il a … son chapeau. / Il a … une étoile filante. Le même mot :", choices: ["perdu", "vu", "acheté", "posé"], correct: "vu" },
+    { id: "FIN_F6", competence: "F6", text: "Lequel est formé comme « nageur » ?", choices: ["hauteur", "coureur", "chaleur", "longueur"], correct: "coureur" },
+    { id: "FIN_F7", competence: "F7", text: "Trouve l’intrus (pas le sens de mal-).", choices: ["malpoli", "maladresse", "malice", "malchance"], correct: "malice" },
+    { id: "FIN_F8", competence: "F8", text: "Une maladie chronique évolue sur …", choices: ["un jour", "plusieurs années", "une heure", "une semaine"], correct: "plusieurs années" },
+    { id: "FIN_F9", competence: "F9", text: "« Permis de conduire » contient le même radical que …", choices: ["perdre", "permission", "perle", "perche"], correct: "permission" },
+    { id: "FIN_F10", competence: "F10", text: "Où peut-on consulter des archives et des manuscrits anciens ?", choices: ["école", "bibliothèque", "stade", "cinéma"], correct: "bibliothèque" },
+    { id: "FIN_F11", competence: "F11", text: "« Lave-vaisselle » est un mot composé. Le suffixe « -able » dans « lavable » indique …", choices: ["possibilité", "action", "résultat", "personne"], correct: "possibilité" },
+    { id: "FIN_F12", competence: "F12", text: "Dans quelle phrase « donner » signifie « produire » ?", choices: ["Cette fontaine donne de l’eau fraîche.", "Il donne son avis.", "Donne-moi ton stylo.", "On donne une fête."], correct: "Cette fontaine donne de l’eau fraîche." },
+    { id: "FIN_F13", competence: "F13", text: "« Être sur son trente-et-un » signifie …", choices: ["être très bien habillé", "avoir 31 ans", "être en colère", "avoir faim"], correct: "être très bien habillé" },
+    { id: "FIN_F14", competence: "F14", text: "« clamer, chuchoter, murmurer » appartiennent au thème de …", choices: ["la lumière", "la voix", "l’eau", "le silence"], correct: "la voix" },
+    { id: "FIN_F15", competence: "F15", text: "Quel mot est synonyme de « succulent » ?", choices: ["amer", "savoureux", "fade", "écœurant"], correct: "savoureux" }
+  ];
+
+  // --------------------------------------------------------------
+  // État
+  let currentIndex = 0;
+  let sessionAnswers = [];
+  let prenom = "";
+
+  // DOM
+  const prenomSelect = document.getElementById('prenomSelect');
+  const compBadge = document.getElementById('compBadge');
+  const questionText = document.getElementById('questionText');
+  const choicesContainer = document.getElementById('choicesContainer');
+  const validateBtn = document.getElementById('validateBtn');
+  const skipBtn = document.getElementById('skipBtn');
+  const feedbackDiv = document.getElementById('feedback');
+  const progressFill = document.getElementById('progressFill');
+  const sessionCounterSpan = document.getElementById('sessionCounter');
+
+  function loadProgress() {
+    const savedIndex = localStorage.getItem('eval_finale_fr_currentIndex');
+    if (savedIndex !== null && !isNaN(parseInt(savedIndex))) {
+      currentIndex = parseInt(savedIndex);
+      if (currentIndex >= exercises.length) currentIndex = exercises.length - 1;
+      if (currentIndex < 0) currentIndex = 0;
+    } else currentIndex = 0;
+    const savedAnswers = localStorage.getItem('eval_finale_fr_sessionAnswers');
+    if (savedAnswers) {
+      try { sessionAnswers = JSON.parse(savedAnswers); } catch(e) { sessionAnswers = []; }
+    } else sessionAnswers = [];
+    updateProgressDisplay();
+  }
+
+  function saveProgress() {
+    localStorage.setItem('eval_finale_fr_currentIndex', currentIndex);
+    localStorage.setItem('eval_finale_fr_sessionAnswers', JSON.stringify(sessionAnswers));
+  }
+
+  function updateProgressDisplay() {
+    const total = exercises.length;
+    const answered = sessionAnswers.length;
+    const percent = (answered / total) * 100;
+    progressFill.style.width = percent + "%";
+    sessionCounterSpan.innerText = `Question ${answered} / ${total}`;
+  }
+
+  function displayExercise() {
+    const ex = exercises[currentIndex];
+    if (!ex) return;
+    compBadge.innerText = `F${ex.competence.substring(1)}`; // affiche F1, F2...
+    questionText.innerText = ex.text;
+    let html = '';
+    ex.choices.forEach((choice, idx) => {
+      const letter = String.fromCharCode(65+idx);
+      html += `
+        <label class="choice">
+          <input type="radio" name="choice" value="${escapeHtml(choice)}">
+          <span class="choice-label">${letter}. ${escapeHtml(choice)}</span>
+        </label>
+      `;
+    });
+    choicesContainer.innerHTML = html;
+    feedbackDiv.className = 'feedback';
+    feedbackDiv.style.display = 'none';
+    const radios = document.querySelectorAll('input[name="choice"]');
+    radios.forEach(r => r.checked = false);
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  async function sendToSheet(prenom, matiere, competence, exerciceId, reponse, correct, tempsMs = 0) {
+    if (!prenom) return;
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          prenom: prenom,
+          matiere: matiere,
+          competence: competence,
+          exerciceId: exerciceId,
+          reponse: reponse,
+          correct: correct ? "true" : "false",
+          scoreMax: "1",
+          tempsMs: tempsMs.toString()
+        })
+      });
+    } catch(e) { console.warn("Erreur envoi sheet", e); }
+  }
+
+  async function checkAnswer() {
+    const selectedRadio = document.querySelector('input[name="choice"]:checked');
+    if (!selectedRadio) {
+      feedbackDiv.innerText = "⚠️ Choisis une réponse avant de valider.";
+      feedbackDiv.className = 'feedback incorrect';
+      feedbackDiv.style.display = 'block';
+      return;
+    }
+    const userAnswer = selectedRadio.value;
+    const ex = exercises[currentIndex];
+    const isCorrect = (userAnswer === ex.correct);
+    sessionAnswers.push({ id: ex.id, correct: isCorrect, answer: userAnswer });
+    saveProgress();
+    updateProgressDisplay();
+
+    feedbackDiv.innerText = isCorrect ? "✔️ Bonne réponse !" : `❌ Mauvaise réponse. La bonne réponse était : ${ex.correct}`;
+    feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+    feedbackDiv.style.display = 'block';
+
+    await sendToSheet(prenom, "eval_finale_fr", ex.competence, ex.id, userAnswer, isCorrect, 0);
+
+    setTimeout(() => {
+      if (currentIndex + 1 < exercises.length) {
+        currentIndex++;
+        displayExercise();
+        document.getElementById('evalCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        feedbackDiv.innerText = "🎉 Félicitations ! Tu as terminé l’évaluation finale de français. Retourne à l’accueil.";
+        feedbackDiv.className = 'feedback correct';
+        feedbackDiv.style.display = 'block';
+        validateBtn.disabled = true;
+        skipBtn.disabled = true;
+      }
+      saveProgress();
+    }, 1000);
+  }
+
+  function skipExercise() {
+    if (currentIndex + 1 < exercises.length) {
+      currentIndex++;
+      displayExercise();
+      feedbackDiv.style.display = 'none';
+      saveProgress();
+    } else {
+      feedbackDiv.innerText = "Tu as déjà terminé l’évaluation !";
+      feedbackDiv.className = 'feedback correct';
+      feedbackDiv.style.display = 'block';
+    }
+  }
+
+  function initPrenom() {
+    const saved = localStorage.getItem('elevePrenom');
+    if (saved && prenomSelect.querySelector(`option[value="${saved}"]`)) {
+      prenomSelect.value = saved;
+      prenom = saved;
+    } else prenom = "";
+    prenomSelect.addEventListener('change', () => {
+      prenom = prenomSelect.value;
+      if (prenom) localStorage.setItem('elevePrenom', prenom);
+      else localStorage.removeItem('elevePrenom');
+    });
+  }
+
+  function init() {
+    initPrenom();
+    loadProgress();
+    displayExercise();
+    validateBtn.addEventListener('click', checkAnswer);
+    skipBtn.addEventListener('click', skipExercise);
+  }
+
+  init();
+</script>
+</body>
+</html>
