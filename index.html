@@ -191,7 +191,6 @@
   <h1>Travailler <span>évaluations nationales</span></h1>
   <p>Entraînement ciblé sur les compétences les plus difficiles (REP+), suivi en temps réel et progression garantie.</p>
   
-  <!-- Sélecteur d'élève (utilisé sur toutes les pages, on stocke le prénom) -->
   <div class="student-selector">
     <label>👤 Élève :</label>
     <select id="prenomSelect">
@@ -249,6 +248,22 @@
     </div>
   </div>
 
+  <div class="section-title">⭐ Évaluation finale (post‑entraînement)</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🇫🇷⭐</div>
+      <h3>Évaluation finale – Français</h3>
+      <p>15 exercices (un par compétence). Mesure tes progrès après l’entraînement.</p>
+      <a href="eval-finale-fr.html" class="btn">Commencer l’évaluation →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧮⭐</div>
+      <h3>Évaluation finale – Maths</h3>
+      <p>15 exercices (un par compétence). Valide tes acquis en mathématiques.</p>
+      <a href="eval-finale-maths.html" class="btn">Commencer l’évaluation →</a>
+    </div>
+  </div>
+
   <div class="info-card">
     <strong>🎯 Méthodologie validée par la DEPP</strong><br>
     Chaque exercice est inspiré des items les moins réussis en REP+ (français : sens de « peine », famille de mots, expression ; maths : masse unitaire, périmètre, proportionnalité).<br>
@@ -261,20 +276,15 @@
 </div>
 
 <script>
-  // URL de ton script Google Apps Script (déployé)
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXtYaj1izgW7vHXlINk7vl1eVj_vTnV9Gq4TRShSJDlwKbnHwScwUzOW5PwDn_mLfk/exec";
 
-  // Charger le prénom sauvegardé localement (pour rester cohérent sur toutes les pages)
   const prenomSelect = document.getElementById('prenomSelect');
   const saveFeedback = document.getElementById('saveFeedback');
-
-  // Restaurer le dernier prénom utilisé (depuis localStorage)
   const savedPrenom = localStorage.getItem('elevePrenom');
   if (savedPrenom && prenomSelect) {
     prenomSelect.value = savedPrenom;
   }
 
-  // Fonction pour enregistrer le choix dans Google Sheet (optionnel mais utile pour tracer les connexions)
   async function enregistrerPrenom(prenom) {
     if (!prenom) return;
     try {
@@ -293,14 +303,15 @@
           tempsMs: Date.now().toString()
         })
       });
-      saveFeedback.textContent = '✓ Enregistré';
-      setTimeout(() => { if(saveFeedback) saveFeedback.textContent = ''; }, 2000);
+      if (saveFeedback) {
+        saveFeedback.textContent = '✓ Enregistré';
+        setTimeout(() => { if(saveFeedback) saveFeedback.textContent = ''; }, 2000);
+      }
     } catch(e) {
       console.warn("Erreur envoi Google Sheet (non bloquante)");
     }
   }
 
-  // Quand l'élève change de prénom : sauvegarde locale + envoi optionnel au sheet
   if (prenomSelect) {
     prenomSelect.addEventListener('change', async function() {
       const prenom = this.value;
@@ -313,7 +324,6 @@
     });
   }
 
-  // Au chargement, si un prénom existe déjà, on l'enregistre silencieusement une fois (trace)
   window.addEventListener('load', () => {
     if (savedPrenom && savedPrenom !== "") {
       enregistrerPrenom(savedPrenom);
