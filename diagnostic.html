@@ -321,25 +321,6 @@
   const progressFill = document.getElementById('progressFill');
   const sessionCounterSpan = document.getElementById('sessionCounter');
 
-  function loadProgress() {
-    const savedIndex = localStorage.getItem('diagnostic_currentIndex');
-    if (savedIndex !== null && !isNaN(parseInt(savedIndex))) {
-      currentIndex = parseInt(savedIndex);
-      if (currentIndex >= finalExercises.length) currentIndex = finalExercises.length - 1;
-      if (currentIndex < 0) currentIndex = 0;
-    } else currentIndex = 0;
-    const savedAnswers = localStorage.getItem('diagnostic_sessionAnswers');
-    if (savedAnswers) {
-      try { sessionAnswers = JSON.parse(savedAnswers); } catch(e) { sessionAnswers = []; }
-    } else sessionAnswers = [];
-    updateProgressDisplay();
-  }
-
-  function saveProgress() {
-    localStorage.setItem('diagnostic_currentIndex', currentIndex);
-    localStorage.setItem('diagnostic_sessionAnswers', JSON.stringify(sessionAnswers));
-  }
-
   function updateProgressDisplay() {
     const total = finalExercises.length;
     const answered = sessionAnswers.length;
@@ -400,6 +381,25 @@
     } catch(e) { console.warn("Erreur envoi sheet", e); }
   }
 
+  function loadProgress() {
+    const savedIndex = localStorage.getItem('diagnostic_currentIndex');
+    if (savedIndex !== null && !isNaN(parseInt(savedIndex))) {
+      currentIndex = parseInt(savedIndex);
+      if (currentIndex >= finalExercises.length) currentIndex = finalExercises.length - 1;
+      if (currentIndex < 0) currentIndex = 0;
+    } else currentIndex = 0;
+    const savedAnswers = localStorage.getItem('diagnostic_sessionAnswers');
+    if (savedAnswers) {
+      try { sessionAnswers = JSON.parse(savedAnswers); } catch(e) { sessionAnswers = []; }
+    } else sessionAnswers = [];
+    updateProgressDisplay();
+  }
+
+  function saveProgress() {
+    localStorage.setItem('diagnostic_currentIndex', currentIndex);
+    localStorage.setItem('diagnostic_sessionAnswers', JSON.stringify(sessionAnswers));
+  }
+
   async function checkAnswer() {
     const selectedRadio = document.querySelector('input[name="choice"]:checked');
     if (!selectedRadio) {
@@ -450,14 +450,38 @@
     }
   }
 
+  // --- Gestion du prénom avec réinitialisation pour Testeur ---
   function initPrenom() {
     const saved = localStorage.getItem('elevePrenom');
     if (saved && prenomSelect.querySelector(`option[value="${saved}"]`)) {
       prenomSelect.value = saved;
       prenom = saved;
-    } else prenom = "";
+    } else {
+      prenom = "";
+    }
+
+    // Si Testeur est déjà sélectionné au chargement, on efface la progression
+    if (prenom === "Testeur") {
+      localStorage.removeItem('diagnostic_currentIndex');
+      localStorage.removeItem('diagnostic_sessionAnswers');
+      currentIndex = 0;
+      sessionAnswers = [];
+      updateProgressDisplay();
+      displayExercise();
+    }
+
     prenomSelect.addEventListener('change', () => {
-      prenom = prenomSelect.value;
+      const newPrenom = prenomSelect.value;
+      if (newPrenom === "Testeur") {
+        // Réinitialisation complète pour Testeur
+        localStorage.removeItem('diagnostic_currentIndex');
+        localStorage.removeItem('diagnostic_sessionAnswers');
+        currentIndex = 0;
+        sessionAnswers = [];
+        updateProgressDisplay();
+        displayExercise();
+      }
+      prenom = newPrenom;
       if (prenom) localStorage.setItem('elevePrenom', prenom);
       else localStorage.removeItem('elevePrenom');
     });
@@ -465,7 +489,7 @@
 
   function init() {
     initPrenom();
-    loadProgress();
+    loadProgress();   // charge la progression normale (sauf si Testeur a tout effacé)
     displayExercise();
     validateBtn.addEventListener('click', checkAnswer);
     skipBtn.addEventListener('click', skipExercise);
