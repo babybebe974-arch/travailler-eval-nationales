@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Évaluation finale — mathématiques | Travailler évaluations nationales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #09090f;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .header {
+      background: #111118;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    .logo span { color: #e8c87a; }
+    .student-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #09090f;
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .student-area label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: #6ab4f5;
+    }
+    select {
+      background: #1e1e2a;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      color: #f0ede8;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+    .progress-bar {
+      background: #1e1e2a;
+      border-radius: 60px;
+      height: 8px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .progress-fill {
+      background: #6ab4f5;
+      width: 0%;
+      height: 8px;
+      border-radius: 60px;
+      transition: width 0.2s;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(240,237,232,0.5);
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 28px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .competence-badge {
+      display: inline-block;
+      background: rgba(106,180,245,0.15);
+      border: 1px solid rgba(106,180,245,0.3);
+      border-radius: 60px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-family: 'DM Mono', monospace;
+      color: #6ab4f5;
+      margin-bottom: 1rem;
+    }
+    .question {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: #1a1a24;
+      padding: 0.7rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .choice:hover {
+      background: #262632;
+    }
+    input[type="radio"] {
+      accent-color: #6ab4f5;
+      width: 18px;
+      height: 18px;
+    }
+    .choice-label {
+      font-size: 1rem;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      background: rgba(106,180,245,0.1);
+      border: 1px solid rgba(106,180,245,0.4);
+      color: #6ab4f5;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    button:hover {
+      background: rgba(106,180,245,0.25);
+    }
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .feedback.correct {
+      background: rgba(126,207,138,0.15);
+      border: 1px solid #7ecf8a;
+      color: #7ecf8a;
+      display: block;
+    }
+    .feedback.incorrect {
+      background: rgba(245,90,90,0.15);
+      border: 1px solid #f55a5a;
+      color: #f55a5a;
+      display: block;
+    }
+    .btn-secondary {
+      background: transparent;
+      border-color: rgba(255,255,255,0.2);
+      color: rgba(240,237,232,0.7);
+    }
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.7rem;
+      color: rgba(240,237,232,0.3);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 2rem;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem; }
+      .card { padding: 1.2rem; }
+      .question { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">Travailler <span>évaluations nationales</span></div>
+  <div class="student-area">
+    <label>👤 Élève</label>
+    <select id="prenomSelect">
+      <option value="">-- Sélectionne --</option>
+      <option value="Raphael">Raphael</option><option value="Heidi">Heidi</option><option value="Alice">Alice</option>
+      <option value="Norah">Norah</option><option value="Adèle">Adèle</option><option value="Kim">Kim</option>
+      <option value="Sheurley">Sheurley</option><option value="Iris">Iris</option><option value="Luc">Luc</option>
+      <option value="Trecy">Trecy</option><option value="Loris">Loris</option><option value="Léna">Léna</option>
+      <option value="Amandine">Amandine</option><option value="Ethan">Ethan</option><option value="Andryana">Andryana</option>
+      <option value="Kaysia">Kaysia</option><option value="Camila">Camila</option><option value="Cassie">Cassie</option>
+      <option value="Adriel">Adriel</option><option value="Testeur">Testeur</option>
+    </select>
+  </div>
+</div>
+
+<div class="container">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="stats">
+    <span>⭐ Évaluation finale — mathématiques</span>
+    <span id="sessionCounter">Question 0 / 15</span>
+  </div>
+
+  <div class="card" id="evalCard">
+    <div><span class="competence-badge" id="compBadge">M1</span></div>
+    <div class="question" id="questionText"></div>
+    <div class="choices" id="choicesContainer"></div>
+    <div class="actions">
+      <button id="validateBtn" class="btn-primary">✓ Valider</button>
+      <button id="skipBtn" class="btn-secondary">⏩ Passer (sans enregistrer)</button>
+    </div>
+    <div id="feedback" class="feedback"></div>
+  </div>
+</div>
+<div class="footer">
+  <p>Évaluation finale — un exercice par compétence. Envoi des résultats à l’enseignant.</p>
+</div>
+
+<script>
+  // URL du script Google Apps Script (identique)
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXtYaj1izgW7vHXlINk7vl1eVj_vTnV9Gq4TRShSJDlwKbnHwScwUzOW5PwDn_mLfk/exec";
+
+  // --------------------------------------------------------------
+  // BANQUE D'EXERCICES (15 questions, une par compétence M1 à M15)
+  const exercises = [
+    { id: "FIN_M1", competence: "M1", text: "36 objets identiques pèsent 1,8 kg. Masse d’un objet ?", choices: ["0,5 kg", "50 g", "5 g", "0,05 kg"], correct: "50 g" },
+    { id: "FIN_M2", competence: "M2", text: "8 centièmes = 10 × …", choices: ["8 millièmes", "8 dixièmes", "8 unités", "8 dix‑millièmes"], correct: "8 millièmes" },
+    { id: "FIN_M3", competence: "M3", text: "Périmètre = 240 cm, largeur = 30 cm. Longueur ?", choices: ["60 cm", "90 cm", "120 cm", "180 cm"], correct: "90 cm" },
+    { id: "FIN_M4", competence: "M4", text: "5 paquets de gâteaux coûtent 7,50 €. Combien pour 3 paquets ?", choices: ["3 €", "4 €", "4,50 €", "5 €"], correct: "4,50 €" },
+    { id: "FIN_M5", competence: "M5", text: "Rectangle de 6 carreaux sur 4 (carreau = 1 cm). Périmètre ?", choices: ["20 cm", "24 cm", "18 cm", "22 cm"], correct: "20 cm" },
+    { id: "FIN_M6", competence: "M6", text: "6,3 × 4 = ?", choices: ["24,2", "25,2", "25,6", "26,2"], correct: "25,2" },
+    { id: "FIN_M7", competence: "M7", text: "Achète 3 stylos à 1,80 € l’un, donne 10 €. Rendue ?", choices: ["4,60 €", "4,20 €", "5,40 €", "6,20 €"], correct: "4,60 €" },
+    { id: "FIN_M8", competence: "M8", text: "3 t‑shirts et 5 casquettes → combien de tenues ?", choices: ["8", "15", "12", "20"], correct: "15" },
+    { id: "FIN_M9", competence: "M9", text: "Début 9h45, activité 35 min → fin ?", choices: ["10h10", "10h20", "10h30", "10h00"], correct: "10h20" },
+    { id: "FIN_M10", competence: "M10", text: "5 personnes, 6 jours, 25 €/jour → total ?", choices: ["500 €", "750 €", "600 €", "900 €"], correct: "750 €" },
+    { id: "FIN_M11", competence: "M11", text: "56 bonbons, donne 9 à chaque enfant, reste 2. Enfants ?", choices: ["5", "6", "7", "8"], correct: "6" },
+    { id: "FIN_M12", competence: "M12", text: "9 bouteilles de 0,75 L → total litres ?", choices: ["9 + 0,75", "9 × 0,75 + prix", "9 × 0,75", "9 + 0,75 + prix"], correct: "9 × 0,75" },
+    { id: "FIN_M13", competence: "M13", text: "Douche 50 L, bain 180 L. Économie sur 5 jours ?", choices: ["650 L", "700 L", "750 L", "900 L"], correct: "650 L" },
+    { id: "FIN_M14", competence: "M14", text: "Moitié de 12,6 ?", choices: ["6,2", "6,3", "6,4", "6,1"], correct: "6,3" },
+    { id: "FIN_M15", competence: "M15", text: "Nombre + 7 = moitié de 200. Quel nombre ?", choices: ["93", "97", "103", "107"], correct: "93" }
+  ];
+
+  // --------------------------------------------------------------
+  // État
+  let currentIndex = 0;
+  let sessionAnswers = [];
+  let prenom = "";
+
+  // DOM
+  const prenomSelect = document.getElementById('prenomSelect');
+  const compBadge = document.getElementById('compBadge');
+  const questionText = document.getElementById('questionText');
+  const choicesContainer = document.getElementById('choicesContainer');
+  const validateBtn = document.getElementById('validateBtn');
+  const skipBtn = document.getElementById('skipBtn');
+  const feedbackDiv = document.getElementById('feedback');
+  const progressFill = document.getElementById('progressFill');
+  const sessionCounterSpan = document.getElementById('sessionCounter');
+
+  function loadProgress() {
+    const savedIndex = localStorage.getItem('eval_finale_maths_currentIndex');
+    if (savedIndex !== null && !isNaN(parseInt(savedIndex))) {
+      currentIndex = parseInt(savedIndex);
+      if (currentIndex >= exercises.length) currentIndex = exercises.length - 1;
+      if (currentIndex < 0) currentIndex = 0;
+    } else currentIndex = 0;
+    const savedAnswers = localStorage.getItem('eval_finale_maths_sessionAnswers');
+    if (savedAnswers) {
+      try { sessionAnswers = JSON.parse(savedAnswers); } catch(e) { sessionAnswers = []; }
+    } else sessionAnswers = [];
+    updateProgressDisplay();
+  }
+
+  function saveProgress() {
+    localStorage.setItem('eval_finale_maths_currentIndex', currentIndex);
+    localStorage.setItem('eval_finale_maths_sessionAnswers', JSON.stringify(sessionAnswers));
+  }
+
+  function updateProgressDisplay() {
+    const total = exercises.length;
+    const answered = sessionAnswers.length;
+    const percent = (answered / total) * 100;
+    progressFill.style.width = percent + "%";
+    sessionCounterSpan.innerText = `Question ${answered} / ${total}`;
+  }
+
+  function displayExercise() {
+    const ex = exercises[currentIndex];
+    if (!ex) return;
+    compBadge.innerText = `M${ex.competence.substring(1)}`; // affiche M1, M2...
+    questionText.innerText = ex.text;
+    let html = '';
+    ex.choices.forEach((choice, idx) => {
+      const letter = String.fromCharCode(65+idx);
+      html += `
+        <label class="choice">
+          <input type="radio" name="choice" value="${escapeHtml(choice)}">
+          <span class="choice-label">${letter}. ${escapeHtml(choice)}</span>
+        </label>
+      `;
+    });
+    choicesContainer.innerHTML = html;
+    feedbackDiv.className = 'feedback';
+    feedbackDiv.style.display = 'none';
+    const radios = document.querySelectorAll('input[name="choice"]');
+    radios.forEach(r => r.checked = false);
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  async function sendToSheet(prenom, matiere, competence, exerciceId, reponse, correct, tempsMs = 0) {
+    if (!prenom) return;
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          prenom: prenom,
+          matiere: matiere,
+          competence: competence,
+          exerciceId: exerciceId,
+          reponse: reponse,
+          correct: correct ? "true" : "false",
+          scoreMax: "1",
+          tempsMs: tempsMs.toString()
+        })
+      });
+    } catch(e) { console.warn("Erreur envoi sheet", e); }
+  }
+
+  async function checkAnswer() {
+    const selectedRadio = document.querySelector('input[name="choice"]:checked');
+    if (!selectedRadio) {
+      feedbackDiv.innerText = "⚠️ Choisis une réponse avant de valider.";
+      feedbackDiv.className = 'feedback incorrect';
+      feedbackDiv.style.display = 'block';
+      return;
+    }
+    const userAnswer = selectedRadio.value;
+    const ex = exercises[currentIndex];
+    const isCorrect = (userAnswer === ex.correct);
+    sessionAnswers.push({ id: ex.id, correct: isCorrect, answer: userAnswer });
+    saveProgress();
+    updateProgressDisplay();
+
+    feedbackDiv.innerText = isCorrect ? "✔️ Bonne réponse !" : `❌ Mauvaise réponse. La bonne réponse était : ${ex.correct}`;
+    feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+    feedbackDiv.style.display = 'block';
+
+    await sendToSheet(prenom, "eval_finale_maths", ex.competence, ex.id, userAnswer, isCorrect, 0);
+
+    setTimeout(() => {
+      if (currentIndex + 1 < exercises.length) {
+        currentIndex++;
+        displayExercise();
+        document.getElementById('evalCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        feedbackDiv.innerText = "🎉 Félicitations ! Tu as terminé l’évaluation finale de maths. Retourne à l’accueil.";
+        feedbackDiv.className = 'feedback correct';
+        feedbackDiv.style.display = 'block';
+        validateBtn.disabled = true;
+        skipBtn.disabled = true;
+      }
+      saveProgress();
+    }, 1000);
+  }
+
+  function skipExercise() {
+    if (currentIndex + 1 < exercises.length) {
+      currentIndex++;
+      displayExercise();
+      feedbackDiv.style.display = 'none';
+      saveProgress();
+    } else {
+      feedbackDiv.innerText = "Tu as déjà terminé l’évaluation !";
+      feedbackDiv.className = 'feedback correct';
+      feedbackDiv.style.display = 'block';
+    }
+  }
+
+  function initPrenom() {
+    const saved = localStorage.getItem('elevePrenom');
+    if (saved && prenomSelect.querySelector(`option[value="${saved}"]`)) {
+      prenomSelect.value = saved;
+      prenom = saved;
+    } else prenom = "";
+    prenomSelect.addEventListener('change', () => {
+      prenom = prenomSelect.value;
+      if (prenom) localStorage.setItem('elevePrenom', prenom);
+      else localStorage.removeItem('elevePrenom');
+    });
+  }
+
+  function init() {
+    initPrenom();
+    loadProgress();
+    displayExercise();
+    validateBtn.addEventListener('click', checkAnswer);
+    skipBtn.addEventListener('click', skipExercise);
+  }
+
+  init();
+</script>
+</body>
+</html>
