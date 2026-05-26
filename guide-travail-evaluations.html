@@ -62,8 +62,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
   <a href="#competences-maths" class="nav-item">Compétences maths</a>
   <a href="#outils" class="nav-item">Outils</a>
   <a href="#eval-finale" class="nav-item">Évaluation finale</a>
+  <a href="#testeur" class="nav-item">Mode Testeur</a>
   <a href="#science" class="nav-item">Fondements</a>
-  <a href="#fonctionnement" class="nav-item">Fonctionnement</a>
   <a href="#suivi" class="nav-item">Suivi</a>
 </div>
 <div class="page">
@@ -76,72 +76,67 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
     <div class="info-box teal">
       <div class="info-box-title">Préparer efficacement les évaluations nationales de 6ème</div>
-      <p>Ce système a été conçu pour des élèves de CM2 en école REP+ (IPS faible). Il identifie les compétences les moins maîtrisées (analyse des rapports DEPP 2025) et propose un entraînement intensif sur 5 semaines : 15 compétences français, 15 compétences maths, 5 exercices variés par compétence, suivi en temps réel via Google Sheets.</p>
-    </div>
-    <div class="cards-grid">
-      <div class="card teal"><span class="card-icon">👥</span><div class="card-title">Pour les élèves</div><div class="card-desc">S’entraîner 10‑15 min/jour, voir sa progression, recevoir des feedbacks immédiats et réviser avec des flashcards.</div></div>
-      <div class="card gold"><span class="card-icon">👩‍🏫</span><div class="card-title">Pour les enseignants</div><div class="card-desc">Tableau de bord Google Sheets, identification des difficultés par compétence, suivi individuel.</div></div>
+      <p>Ce système a été conçu pour des élèves de CM2 en école REP+ (IPS faible). Il identifie les compétences les moins maîtrisées (analyse des rapports DEPP 2025) et propose un entraînement intensif sur 5 semaines : 74 exercices de français (conjugaison, grammaire, orthographe, lexique) et 75 exercices de maths (automatismes, problèmes complexes, grandeurs).</p>
     </div>
   </div>
 
-  <!-- SECTION COMPÉTENCES FRANÇAIS -->
+  <!-- SECTION COMPÉTENCES FRANÇAIS (restructurées) -->
   <div class="section" id="competences-fr">
     <div class="section-header">
       <span class="section-icon">🇫🇷</span>
       <div><div class="section-title">Compétences français (15 prioritaires)</div><div class="section-sub">Taux de réussite nationaux 2025 — source DEPP</div></div>
     </div>
     <div class="info-box teal">
-      <p>Les items ci-dessous sont extraits des tests spécifiques de lexique de l’évaluation de début de sixième 2025. Les taux de réussite nationaux sont indiqués ; en REP+, ces taux sont en moyenne inférieurs de 10 à 15 points. Chaque compétence a fait l’objet de 5 exercices variés dans le module d’entraînement.</p>
+      <p>Les exercices sont répartis en quatre domaines : <strong>conjugaison</strong> (présent, imparfait, passé composé, futur), <strong>grammaire</strong> (nature des mots, fonctions COD/COI/CC/attribut), <strong>orthographe</strong> (accords sujet-verbe et GN), <strong>lexique</strong> (les 7 items les plus discriminants des évaluations nationales).</p>
     </div>
     <table class="competence-table">
-      <thead><tr><th>Compétence</th><th>Description / exemple d’item</th><th>Taux national</th></tr></thead>
+      <thead><tr><th>Domaine</th><th>Compétence / exemple</th><th>Taux national</th></tr></thead>
       <tbody>
-        <tr><td><strong>F1</strong></td><td>Distinguer les sens de « peine » (chagrin, difficulté, justesse)</td><td class="rate-low">31,8 %</td></tr>
-        <tr><td><strong>F2</strong></td><td>Identifier les mots appartenant au champ lexical de l’émotion</td><td class="rate-low">33,0 %</td></tr>
-        <tr><td><strong>F3</strong></td><td>Trouver le mot de la même famille (radical « main »)</td><td class="rate-low">42,6 %</td></tr>
-        <tr><td><strong>F4</strong></td><td>Remplacer « parle de » par un verbe plus précis (évoquer, raconter…)</td><td class="rate-low">46,6 %</td></tr>
-        <tr><td><strong>F5</strong></td><td>Compléter deux phrases avec le même mot (polysémie)</td><td class="rate-low">47,1 %</td></tr>
-        <tr><td><strong>F6</strong></td><td>Identifier un nom d’agent construit avec le suffixe -eur (danseur, vendeur…)</td><td class="rate-mid">59,9 %</td></tr>
-        <tr><td><strong>F7</strong></td><td>Reconnaître le sens négatif du préfixe mal- (intrus)</td><td class="rate-mid">69,0 %</td></tr>
-        <tr><td><strong>F8</strong></td><td>Comprendre le sens de « chronique » (qui dure dans le temps)</td><td class="rate-mid">71,2 %</td></tr>
-        <tr><td><strong>F9</strong></td><td>Famille du mot « permettre » / « permissif »</td><td class="rate-mid">73,3 %</td></tr>
-        <tr><td><strong>F10</strong></td><td>Reconnaître un lieu (bibliothèque) à partir d’indices</td><td class="rate-mid">77,8 %</td></tr>
-        <tr><td><strong>F11</strong></td><td>Comprendre le sens d’un suffixe (-able, -ible, -eux, -age)</td><td class="rate-mid">77,9 %</td></tr>
-        <tr><td><strong>F12</strong></td><td>Différencier les sens du verbe « donner » (offrir, remettre, produire…)</td><td class="rate-mid">77,9 %</td></tr>
-        <tr><td><strong>F13</strong></td><td>Comprendre des expressions idiomatiques (chat dans la gorge, sur son nuage…)</td><td class="rate-mid">80,2 %</td></tr>
-        <tr><td><strong>F14</strong></td><td>Identifier un champ lexical (peur, joie, bruit, rapidité, passé)</td><td class="rate-mid">81,5 %</td></tr>
-        <tr><td><strong>F15</strong></td><td>Trouver un synonyme de « succulent » (délicieux, exquis)</td><td class="rate-high">92,8 %</td></tr>
+        <tr><td>Conjugaison</td><td>Imparfait : « nous allions »</td><td class="rate-low">~55 %</td></tr>
+        <tr><td>Conjugaison</td><td>Passé composé : « ils ont pris »</td><td class="rate-low">~64 %</td></tr>
+        <tr><td>Conjugaison</td><td>Présent : « tu finis »</td><td class="rate-mid">~68 %</td></tr>
+        <tr><td>Grammaire</td><td>Nature des mots (adverbe, adjectif, nom, préposition, verbe)</td><td class="rate-low">~60 %</td></tr>
+        <tr><td>Grammaire</td><td>Fonctions (COD, COI, CC, attribut)</td><td class="rate-low">~62 %</td></tr>
+        <tr><td>Orthographe</td><td>Accord sujet-verbe (sujet éloigné / inversé)</td><td class="rate-low">~50 %</td></tr>
+        <tr><td>Orthographe</td><td>Accord dans le groupe nominal</td><td class="rate-low">~58 %</td></tr>
+        <tr><td>Lexique</td><td>Q11 – Sens de « peine » (difficulté/chagrin/justesse)</td><td class="rate-low">31,8 %</td></tr>
+        <tr><td>Lexique</td><td>Q14 – Champ lexical de l’émotion (intrus)</td><td class="rate-low">33,0 %</td></tr>
+        <tr><td>Lexique</td><td>Q4 – Famille du mot « main »</td><td class="rate-low">42,6 %</td></tr>
+        <tr><td>Lexique</td><td>Q15 – Remplacer « parle de » par un verbe précis</td><td class="rate-low">46,6 %</td></tr>
+        <tr><td>Lexique</td><td>Q10 – Même mot pour deux phrases</td><td class="rate-low">47,1 %</td></tr>
+        <tr><td>Lexique</td><td>Q3 – Suffixe -eur (vendeur → joueur)</td><td class="rate-mid">59,9 %</td></tr>
+        <tr><td>Lexique</td><td>Q1 – Préfixe mal- (intrus)</td><td class="rate-mid">69,0 %</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- SECTION COMPÉTENCES MATHÉMATIQUES -->
+  <!-- SECTION COMPÉTENCES MATHÉMATIQUES (avec problèmes complexes) -->
   <div class="section" id="competences-maths">
     <div class="section-header">
       <span class="section-icon">🧮</span>
       <div><div class="section-title">Compétences mathématiques (15 prioritaires)</div><div class="section-sub">Taux de réussite nationaux 2025 — source DEPP</div></div>
     </div>
     <div class="info-box teal">
-      <p>Les items ci-dessous sont issus des tests spécifiques de résolution de problèmes et d’automatismes. En REP+, les écarts sont encore plus marqués (jusqu’à -15 points).</p>
+      <p>Les exercices couvrent les automatismes (masse, décimaux, périmètre, multiplication, combinaisons, durée) et des <strong>problèmes complexes</strong> à deux ou trois opérations (proportionnalité, monnaie rendue, coût total, économie d’eau, équation).</p>
     </div>
     <table class="competence-table">
-      <thead><tr><th>Compétence</th><th>Description / exemple d’item</th><th>Taux national</th></tr></thead>
+      <thead><tr><th>Compétence</th><th>Exemple d’item</th><th>Taux national</th></tr></thead>
       <tbody>
-        <tr><td><strong>M1</strong></td><td>Masse unitaire (division : 30 objets = 12 kg → masse d’un objet)</td><td class="rate-low">21,4 %</td></tr>
-        <tr><td><strong>M2</strong></td><td>Relations entre dixièmes, centièmes, millièmes (5 millièmes = 10 × ?)</td><td class="rate-low">28,2 %</td></tr>
-        <tr><td><strong>M3</strong></td><td>Calcul de la largeur d’un rectangle à partir du périmètre</td><td class="rate-low">29,8 %</td></tr>
-        <tr><td><strong>M4</strong></td><td>Problème de proportionnalité (prix de 3 croissants si 9 coûtent 12 €)</td><td class="rate-low">35,9 %</td></tr>
-        <tr><td><strong>M5</strong></td><td>Périmètre d’un rectangle sur quadrillage (1 carreau = 1 cm)</td><td class="rate-low">36,1 %</td></tr>
-        <tr><td><strong>M6</strong></td><td>Multiplication d’un nombre décimal par un entier (3,4 × 5)</td><td class="rate-low">36,2 %</td></tr>
-        <tr><td><strong>M7</strong></td><td>Monnaie rendue (achats + billet)</td><td class="rate-mid">40,1 %</td></tr>
-        <tr><td><strong>M8</strong></td><td>Dénombrement de combinaisons (principe multiplicatif)</td><td class="rate-mid">40,5 %</td></tr>
-        <tr><td><strong>M9</strong></td><td>Calcul d’une heure de fin après une durée</td><td class="rate-mid">40,5 %</td></tr>
-        <tr><td><strong>M10</strong></td><td>Coût total (prix × personnes × jours)</td><td class="rate-mid">41,2 %</td></tr>
-        <tr><td><strong>M11</strong></td><td>Partage avec reste (trouver le nombre de parts)</td><td class="rate-mid">41,6 %</td></tr>
-        <tr><td><strong>M12</strong></td><td>Choisir la bonne opération pour un volume total (bouteilles × contenance)</td><td class="rate-mid">42,1 %</td></tr>
-        <tr><td><strong>M13</strong></td><td>Économie d’eau sur plusieurs jours (différence puis multiplication)</td><td class="rate-mid">46,1 %</td></tr>
-        <tr><td><strong>M14</strong></td><td>Moitié d’un nombre décimal (8,10 → 4,05)</td><td class="rate-mid">46,5 %</td></tr>
-        <tr><td><strong>M15</strong></td><td>Résoudre une équation simple (n + a = moitié de b)</td><td class="rate-mid">47,5 %</td></tr>
+        <tr><td>M1 – Masse unitaire</td><td>36 objets = 1,8 kg → masse d’un objet</td><td class="rate-low">21,4 %</td></tr>
+        <tr><td>M2 – Décimaux</td><td>8 centièmes = 10 × … millièmes</td><td class="rate-low">28,2 %</td></tr>
+        <tr><td>M3 – Périmètre</td><td>Périmètre 240 cm, largeur 30 cm → longueur</td><td class="rate-low">29,8 %</td></tr>
+        <tr><td>M4 – Proportionnalité</td><td>5 paquets = 7,50 € → 3 paquets ?</td><td class="rate-low">35,9 %</td></tr>
+        <tr><td>M5 – Quadrillage</td><td>Rectangle 6×4 carreaux → périmètre</td><td class="rate-low">36,1 %</td></tr>
+        <tr><td>M6 – Multiplication décimale</td><td>6,3 × 4</td><td class="rate-low">36,2 %</td></tr>
+        <tr><td>M7 – Monnaie rendue</td><td>3 stylos à 1,80 €, billet 10 € → rendue</td><td class="rate-mid">40,1 %</td></tr>
+        <tr><td>M8 – Combinaisons</td><td>3 t‑shirts et 5 casquettes → tenues</td><td class="rate-mid">40,5 %</td></tr>
+        <tr><td>M9 – Durée</td><td>Début 9h45, durée 35 min → fin</td><td class="rate-mid">40,5 %</td></tr>
+        <tr><td>M10 – Coût total</td><td>5 personnes × 6 jours × 25 €</td><td class="rate-mid">41,2 %</td></tr>
+        <tr><td>M11 – Partage avec reste</td><td>56 bonbons, 9 par enfant, reste 2 → enfants</td><td class="rate-mid">41,6 %</td></tr>
+        <tr><td>M12 – Opération litres</td><td>9 bouteilles de 0,75 L → multiplication</td><td class="rate-mid">42,1 %</td></tr>
+        <tr><td>M13 – Économie d’eau</td><td>Douche 50 L, bain 180 L → économie sur 5 jours</td><td class="rate-mid">46,1 %</td></tr>
+        <tr><td>M14 – Moitié décimale</td><td>Moitié de 12,6</td><td class="rate-mid">46,5 %</td></tr>
+        <tr><td>M15 – Équation simple</td><td>Nombre + 7 = moitié de 200</td><td class="rate-mid">47,5 %</td></tr>
       </tbody>
     </table>
   </div>
@@ -153,14 +148,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
       <div><div class="section-title">Les outils du hub</div><div class="section-sub">Quatre modules principaux</div></div>
     </div>
     <div class="cards-grid">
-      <div class="card teal"><span class="card-icon">📋</span><div class="card-title">Diagnostic initial</div><div class="card-desc">30 questions aléatoires (15 français + 15 maths) pour identifier les points faibles de chaque élève.</div></div>
-      <div class="card gold"><span class="card-icon">⚡</span><div class="card-title">Entraînement ciblé</div><div class="card-desc">75 exercices par matière, 5 variantes par compétence. Sauvegarde locale et envoi au Google Sheet.</div></div>
-      <div class="card blue"><span class="card-icon">🗂</span><div class="card-title">Flashcards</div><div class="card-desc">30 cartes (15 français + 15 maths) avec recto/verso pour mémoriser les règles et exemples.</div></div>
+      <div class="card teal"><span class="card-icon">📋</span><div class="card-title">Diagnostic initial</div><div class="card-desc">30 questions aléatoires (15 français + 15 maths) pour identifier les points faibles.</div></div>
+      <div class="card gold"><span class="card-icon">⚡</span><div class="card-title">Entraînement ciblé</div><div class="card-desc">74 exercices français (conjugaison, grammaire, orthographe, lexique) et 75 maths (automatismes + problèmes complexes). Sauvegarde locale + envoi Google Sheet.</div></div>
+      <div class="card blue"><span class="card-icon">🗂</span><div class="card-title">Flashcards</div><div class="card-desc">34 cartes (français + maths) pour mémoriser règles et exemples.</div></div>
       <div class="card teal"><span class="card-icon">📊</span><div class="card-title">Suivi enseignant</div><div class="card-desc">Accès direct au Google Sheet, filtres, export CSV, aperçu intégré.</div></div>
     </div>
   </div>
 
-  <!-- SECTION ÉVALUATION FINALE (NOUVELLE) -->
+  <!-- SECTION ÉVALUATION FINALE -->
   <div class="section" id="eval-finale">
     <div class="section-header">
       <span class="section-icon">⭐</span>
@@ -168,21 +163,19 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
     <div class="info-box gold">
       <div class="info-box-title">Pourquoi une évaluation finale ?</div>
-      <p>Après avoir travaillé chaque compétence avec 5 exercices d’entraînement, l’élève passe une évaluation finale courte (15 questions en français, 15 en maths – une par compétence). Cela permet de mesurer les progrès réalisés et d’identifier les compétences encore fragiles avant les évaluations nationales.</p>
+      <p>Après avoir travaillé chaque compétence, l’élève passe une évaluation finale courte (15 questions en français, 15 en maths – une par compétence). Les résultats sont envoyés au Google Sheet avec la matière <code>eval_finale_fr</code> ou <code>eval_finale_maths</code>, permettant de comparer les progrès par rapport au diagnostic initial.</p>
     </div>
-    <div class="info-box">
-      <div class="info-box-title">📋 Déroulement</div>
-      <ul style="margin-left: 20px; color: var(--muted);">
-        <li><strong>Français :</strong> 15 exercices QCM (un pour chaque compétence F1 à F15).</li>
-        <li><strong>Maths :</strong> 15 exercices QCM (un pour chaque compétence M1 à M15).</li>
-        <li>Les exercices sont inédits (non vus pendant l’entraînement).</li>
-        <li>Chaque réponse est envoyée au Google Sheet avec la matière <code>eval_finale_fr</code> ou <code>eval_finale_maths</code> (colonne <code>Matiere</code>).</li>
-        <li>L’élève peut reprendre l’évaluation plus tard (progression sauvegardée localement).</li>
-      </ul>
+  </div>
+
+  <!-- SECTION MODE TESTEUR -->
+  <div class="section" id="testeur">
+    <div class="section-header">
+      <span class="section-icon">🧪</span>
+      <div><div class="section-title">Mode Testeur</div><div class="section-sub">Pour les enseignants et les vérifications</div></div>
     </div>
-    <div class="info-box">
-      <div class="info-box-title">📊 Interprétation des résultats</div>
-      <p>Dans le Google Sheet, filtrez sur <code>Matiere = eval_finale_fr</code> ou <code>eval_finale_maths</code>. Comparez avec les résultats du diagnostic initial (matière <code>diagnostic</code>) et de l’entraînement (<code>francais</code> / <code>maths</code>). Une progression nette indique une bonne maîtrise ; des erreurs persistantes signalent une compétence à retravailler.</p>
+    <div class="info-box teal">
+      <div class="info-box-title">Comment utiliser le compte “Testeur”</div>
+      <p>Sélectionnez le prénom <strong>Testeur</strong> dans la liste déroulante. À chaque sélection, la progression locale (diagnostic, entraînement, évaluation finale) est automatiquement réinitialisée. Cela permet de refaire les modules autant de fois que nécessaire sans que les réponses précédentes ne bloquent l’avancement.</p>
     </div>
   </div>
 
@@ -198,24 +191,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         <tr><td>Répétition espacée (flashcards)</td><td>Ebbinghaus, Cepeda (2006)</td><td>Réduction de l’oubli de 30 à 50 %</td></tr>
         <tr><td>Exercices inspirés des sujets réels</td><td>Wiggins (1998) – authenticité</td><td>+15 à 25 % de réussite</td></tr>
         <tr><td>Diagnostic initial</td><td>Black & Wiliam (1998)</td><td>Gain d’efficacité pédagogique (effet taille ~0,7)</td></tr>
-        <tr><td>Adaptation automatique (double dose)</td><td>Kulik & Kulik (1991)</td><td>Progression accrue de 20‑30 % sur les points faibles</td></tr>
-        <tr><td>Variété des exercices (5 versions)</td><td>Sweller – charge cognitive</td><td>Mémorisation profonde, évite le par cœur</td></tr>
+        <tr><td>Problèmes complexes (2‑3 opérations)</td><td>VanLehn (2011)</td><td>Développe le raisonnement et la modélisation</td></tr>
+        <tr><td>Variété des exercices</td><td>Sweller – charge cognitive</td><td>Mémorisation profonde, évite le par cœur</td></tr>
         <tr><td>Feedback immédiat</td><td>Hattie (2009)</td><td>Amélioration significative de la compréhension</td></tr>
       </tbody>
     </table>
-  </div>
-
-  <!-- SECTION FONCTIONNEMENT TECHNIQUE -->
-  <div class="section" id="fonctionnement">
-    <div class="section-header">
-      <span class="section-icon">⚙️</span>
-      <div><div class="section-title">Fonctionnement technique</div><div class="section-sub">Ce qui se passe sous le capot</div></div>
-    </div>
-    <div class="cards-grid">
-      <div class="card teal"><span class="card-icon">📈</span><div class="card-title">Envoi des résultats</div><div class="card-desc">Chaque réponse est envoyée à un Google Sheet via un script Apps Script (mode no-cors). L’enseignant consulte les données en direct.</div></div>
-      <div class="card gold"><span class="card-icon">💾</span><div class="card-title">Sauvegarde locale</div><div class="card-desc">localStorage stocke la progression de l’élève (exercice en cours, réponses déjà données).</div></div>
-      <div class="card blue"><span class="card-icon">🔁</span><div class="card-title">Mélange aléatoire</div><div class="card-desc">Les variantes d’exercices sont tirées aléatoirement pour chaque session.</div></div>
-    </div>
   </div>
 
   <!-- SECTION SUIVI -->
@@ -226,10 +206,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
     <div class="info-box teal">
       <div class="info-box-title">Tableau de bord Google Sheets</div>
-      <p>Les colonnes enregistrées : <code>DateHeure, Prenom, Matiere, Competence, ExerciceId, ReponseDonnee, Correct, ScoreMax, TempsMs</code>. L’enseignant peut filtrer, créer des graphiques et exporter en CSV.</p>
+      <p>Les colonnes enregistrées : <code>DateHeure, Prenom, Matiere, Competence, ExerciceId, ReponseDonnee, Correct, ScoreMax, TempsMs</code>. L’enseignant peut filtrer, créer des graphiques et exporter en CSV. Les matières <code>eval_finale_fr</code> et <code>eval_finale_maths</code> permettent de distinguer les résultats des évaluations finales.</p>
     </div>
     <div class="cards-grid">
-      <div class="card teal"><span class="card-icon">👤</span><div class="card-title">Identification</div><div class="card-desc">L’élève choisit son prénom dans une liste déroulante (20 prénoms + Testeur). Le prénom est mémorisé localement.</div></div>
+      <div class="card teal"><span class="card-icon">👤</span><div class="card-title">Identification</div><div class="card-desc">L’élève choisit son prénom dans une liste (20 prénoms + Testeur). Le prénom est mémorisé localement.</div></div>
       <div class="card gold"><span class="card-icon">🔒</span><div class="card-title">RGPD</div><div class="card-desc">Aucune donnée personnelle sensible. Les prénoms sont utilisés uniquement pour le suivi interne. Le Sheet reste sous le contrôle de l’enseignant.</div></div>
     </div>
   </div>
