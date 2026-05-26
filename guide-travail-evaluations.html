@@ -34,6 +34,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .card-desc{font-size:16px;color:var(--muted);line-height:1.6;}
 .info-box{background:var(--bg2);border-radius:var(--r);padding:24px;margin-bottom:24px;border-left:4px solid;}
 .info-box.teal{border-color:var(--teal);}
+.info-box.gold{border-color:var(--gold);}
 .info-box-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:10px;}
 .info-box p{font-size:16px;color:var(--muted);line-height:1.6;}
 .competence-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px;}
@@ -60,6 +61,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
   <a href="#competences-fr" class="nav-item">Compétences FR</a>
   <a href="#competences-maths" class="nav-item">Compétences maths</a>
   <a href="#outils" class="nav-item">Outils</a>
+  <a href="#eval-finale" class="nav-item">Évaluation finale</a>
   <a href="#science" class="nav-item">Fondements</a>
   <a href="#fonctionnement" class="nav-item">Fonctionnement</a>
   <a href="#suivi" class="nav-item">Suivi</a>
@@ -82,7 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     </div>
   </div>
 
-  <!-- SECTION COMPÉTENCES FRANÇAIS (15 items + taux) -->
+  <!-- SECTION COMPÉTENCES FRANÇAIS -->
   <div class="section" id="competences-fr">
     <div class="section-header">
       <span class="section-icon">🇫🇷</span>
@@ -97,7 +99,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         <tr><td><strong>F1</strong></td><td>Distinguer les sens de « peine » (chagrin, difficulté, justesse)</td><td class="rate-low">31,8 %</td></tr>
         <tr><td><strong>F2</strong></td><td>Identifier les mots appartenant au champ lexical de l’émotion</td><td class="rate-low">33,0 %</td></tr>
         <tr><td><strong>F3</strong></td><td>Trouver le mot de la même famille (radical « main »)</td><td class="rate-low">42,6 %</td></tr>
-        <tr><td><strong>F4</strong></td><td>Remplacer « parler de » par un verbe plus précis (évoquer, raconter…)</td><td class="rate-low">46,6 %</td></tr>
+        <tr><td><strong>F4</strong></td><td>Remplacer « parle de » par un verbe plus précis (évoquer, raconter…)</td><td class="rate-low">46,6 %</td></tr>
         <tr><td><strong>F5</strong></td><td>Compléter deux phrases avec le même mot (polysémie)</td><td class="rate-low">47,1 %</td></tr>
         <tr><td><strong>F6</strong></td><td>Identifier un nom d’agent construit avec le suffixe -eur (danseur, vendeur…)</td><td class="rate-mid">59,9 %</td></tr>
         <tr><td><strong>F7</strong></td><td>Reconnaître le sens négatif du préfixe mal- (intrus)</td><td class="rate-mid">69,0 %</td></tr>
@@ -111,12 +113,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         <tr><td><strong>F15</strong></td><td>Trouver un synonyme de « succulent » (délicieux, exquis)</td><td class="rate-high">92,8 %</td></tr>
       </tbody>
     </table>
-    <div class="info-box">
-      <p>🔍 <strong>Note</strong> : Les compétences F6 à F15 ont des taux nationaux plus élevés, mais restent difficiles pour les élèves de REP+. Le hub inclut des exercices progressifs sur l’ensemble.</p>
-    </div>
   </div>
 
-  <!-- SECTION COMPÉTENCES MATHÉMATIQUES (15 items + taux) -->
+  <!-- SECTION COMPÉTENCES MATHÉMATIQUES -->
   <div class="section" id="competences-maths">
     <div class="section-header">
       <span class="section-icon">🧮</span>
@@ -145,9 +144,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
         <tr><td><strong>M15</strong></td><td>Résoudre une équation simple (n + a = moitié de b)</td><td class="rate-mid">47,5 %</td></tr>
       </tbody>
     </table>
-    <div class="info-box">
-      <p>📐 <strong>Rappel</strong> : Pour chaque compétence, le module d’entraînement propose 5 exercices différents (nombres, contextes, figures) pour éviter la mémorisation par cœur.</p>
-    </div>
   </div>
 
   <!-- SECTION OUTILS -->
@@ -161,6 +157,32 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
       <div class="card gold"><span class="card-icon">⚡</span><div class="card-title">Entraînement ciblé</div><div class="card-desc">75 exercices par matière, 5 variantes par compétence. Sauvegarde locale et envoi au Google Sheet.</div></div>
       <div class="card blue"><span class="card-icon">🗂</span><div class="card-title">Flashcards</div><div class="card-desc">30 cartes (15 français + 15 maths) avec recto/verso pour mémoriser les règles et exemples.</div></div>
       <div class="card teal"><span class="card-icon">📊</span><div class="card-title">Suivi enseignant</div><div class="card-desc">Accès direct au Google Sheet, filtres, export CSV, aperçu intégré.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION ÉVALUATION FINALE (NOUVELLE) -->
+  <div class="section" id="eval-finale">
+    <div class="section-header">
+      <span class="section-icon">⭐</span>
+      <div><div class="section-title">Évaluation finale</div><div class="section-sub">Mesurer les progrès après l’entraînement</div></div>
+    </div>
+    <div class="info-box gold">
+      <div class="info-box-title">Pourquoi une évaluation finale ?</div>
+      <p>Après avoir travaillé chaque compétence avec 5 exercices d’entraînement, l’élève passe une évaluation finale courte (15 questions en français, 15 en maths – une par compétence). Cela permet de mesurer les progrès réalisés et d’identifier les compétences encore fragiles avant les évaluations nationales.</p>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">📋 Déroulement</div>
+      <ul style="margin-left: 20px; color: var(--muted);">
+        <li><strong>Français :</strong> 15 exercices QCM (un pour chaque compétence F1 à F15).</li>
+        <li><strong>Maths :</strong> 15 exercices QCM (un pour chaque compétence M1 à M15).</li>
+        <li>Les exercices sont inédits (non vus pendant l’entraînement).</li>
+        <li>Chaque réponse est envoyée au Google Sheet avec la matière <code>eval_finale_fr</code> ou <code>eval_finale_maths</code> (colonne <code>Matiere</code>).</li>
+        <li>L’élève peut reprendre l’évaluation plus tard (progression sauvegardée localement).</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">📊 Interprétation des résultats</div>
+      <p>Dans le Google Sheet, filtrez sur <code>Matiere = eval_finale_fr</code> ou <code>eval_finale_maths</code>. Comparez avec les résultats du diagnostic initial (matière <code>diagnostic</code>) et de l’entraînement (<code>francais</code> / <code>maths</code>). Une progression nette indique une bonne maîtrise ; des erreurs persistantes signalent une compétence à retravailler.</p>
     </div>
   </div>
 
